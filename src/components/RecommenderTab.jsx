@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
 const GOALS = [
-  { id: 'fat-loss',      label: 'Fat Loss',             desc: 'Visceral fat reduction, body recomp' },
-  { id: 'recovery',      label: 'Muscle Recovery',       desc: 'Faster repair, reduced DOMS' },
+  { id: 'fat-loss',      label: 'Fat Loss',             desc: 'GLP-1 agonists, Retatrutide, AOD, visceral fat' },
+  { id: 'muscle',        label: 'Muscle Building',       desc: 'GH optimization, recovery, repair, recomp' },
   { id: 'cognitive',     label: 'Cognitive Enhancement', desc: 'Focus, BDNF, neuroprotection' },
-  { id: 'gh',            label: 'GH Optimization',       desc: 'Pulsatile GH, anti-aging, sleep quality' },
   { id: 'injury',        label: 'Injury Healing',        desc: 'Tendon, ligament, joint repair' },
   { id: 'sleep',         label: 'Sleep Quality',         desc: 'GH pulse, deep sleep, recovery' },
   { id: 'libido',        label: 'Libido / Sexual Health',desc: 'Melanocortin, GnRH axis' },
   { id: 'gut',           label: 'Gut Health',            desc: 'Gut lining, IBD, permeability' },
   { id: 'metabolic',     label: 'Metabolic Health',      desc: 'Insulin sensitivity, mitochondria' },
   { id: 'immune',        label: 'Immune Support',        desc: 'Thymosin, immune modulation' },
+  { id: 'anti-aging',    label: 'Anti-Aging / Longevity',desc: 'Telomere support, epithalon, senescence' },
 ]
 
 const RESEARCH_COLORS = {
