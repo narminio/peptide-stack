@@ -143,14 +143,14 @@ export default function ScheduleTab({ recommendation, onGoRecommender }) {
                 ).map(d => DAY_LABELS[d]).join(', ')
                 const color = colorMap[peptide.name]
                 return (
-                  <tr key={i} style={{ borderBottom: '1px solid #12121e' }}>
+                  <tr key={i} style={{ borderBottom: '1px solid #e2e8f0' }}>
                     <td style={tdStyle}>
                       <span style={tdPeptideStyle(color)}>{peptide.name}</span>
                     </td>
                     <td style={tdStyle}>{peptide.dose}</td>
                     <td style={tdStyle}>{ROUTE_ABBR[peptide.route] || peptide.route}</td>
                     <td style={tdStyle}>{peptide.timing}</td>
-                    <td style={{ ...tdStyle, color: '#64748b' }}>{daysActive || 'As needed'}</td>
+                    <td style={{ ...tdStyle, color: '#94a3b8' }}>{daysActive || 'As needed'}</td>
                   </tr>
                 )
               })}
@@ -162,7 +162,7 @@ export default function ScheduleTab({ recommendation, onGoRecommender }) {
       {/* Warnings */}
       {recommendation.warnings?.length > 0 && (
         <div style={warningBoxStyle}>
-          <strong style={{ color: '#fbbf24', fontSize: '11px', letterSpacing: '0.08em' }}>IMPORTANT NOTES</strong>
+          <strong style={{ color: '#92400e', fontSize: '11px', letterSpacing: '0.08em' }}>IMPORTANT NOTES</strong>
           <ul style={warningListStyle}>
             {recommendation.warnings.map((w, i) => <li key={i}>{w}</li>)}
           </ul>
@@ -189,7 +189,7 @@ const emptyStateStyle = {
 
 const emptyIconStyle = {
   fontSize: '48px',
-  color: '#1e1e35',
+  color: '#e2e8f0',
   marginBottom: '16px',
 }
 
@@ -197,14 +197,14 @@ const emptyTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '18px',
   fontWeight: 700,
-  color: '#475569',
+  color: '#64748b',
   marginBottom: '8px',
 }
 
 const emptyBodyStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '13px',
-  color: '#334155',
+  color: '#94a3b8',
   marginBottom: '24px',
   lineHeight: 1.6,
 }
@@ -224,12 +224,13 @@ const goButtonStyle = {
 const summaryBarStyle = {
   display: 'flex',
   gap: '32px',
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '10px',
   padding: '16px 20px',
   marginBottom: '20px',
   flexWrap: 'wrap',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const summaryLabelStyle = {
@@ -245,7 +246,7 @@ const summaryValueStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '14px',
   fontWeight: 600,
-  color: '#e2e8f0',
+  color: '#0f172a',
 }
 
 const legendStyle = {
@@ -275,11 +276,12 @@ const gridStyle = {
 }
 
 const dayCardStyle = (isEmpty) => ({
-  background: isEmpty ? '#08080f' : '#0f0f1a',
-  border: `1px solid ${isEmpty ? '#12121e' : '#1e1e35'}`,
+  background: isEmpty ? '#f8fafc' : '#ffffff',
+  border: `1px solid ${isEmpty ? '#e2e8f0' : '#e2e8f0'}`,
   borderRadius: '8px',
   padding: '10px 8px',
   minHeight: '80px',
+  boxShadow: isEmpty ? 'none' : '0 1px 3px rgba(0,0,0,0.06)',
 })
 
 const dayHeaderStyle = {
@@ -293,7 +295,7 @@ const dayLabelStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '11px',
   fontWeight: 700,
-  color: '#475569',
+  color: '#64748b',
   letterSpacing: '0.06em',
   textTransform: 'uppercase',
 }
@@ -301,14 +303,14 @@ const dayLabelStyle = {
 const restLabelStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '9px',
-  color: '#334155',
+  color: '#94a3b8',
   letterSpacing: '0.06em',
 }
 
 const timeSlotLabelStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '9px',
-  color: '#334155',
+  color: '#94a3b8',
   letterSpacing: '0.06em',
   marginBottom: '4px',
 }
@@ -324,7 +326,7 @@ const pillStyle = (color) => ({
 const pillNameStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '9px',
-  color: '#cbd5e1',
+  color: '#0f172a',
   display: 'block',
   fontWeight: 600,
   whiteSpace: 'nowrap',
@@ -335,7 +337,7 @@ const pillNameStyle = {
 const pillDoseStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '8px',
-  color: '#475569',
+  color: '#64748b',
   display: 'block',
 }
 
@@ -343,7 +345,7 @@ const detailTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '14px',
   fontWeight: 600,
-  color: '#64748b',
+  color: '#0f172a',
   letterSpacing: '0.06em',
   textTransform: 'uppercase',
   marginBottom: '12px',
@@ -358,21 +360,22 @@ const tableStyle = {
 const thStyle = {
   textAlign: 'left',
   padding: '8px 12px',
-  color: '#475569',
+  color: '#64748b',
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '11px',
   fontWeight: 600,
   letterSpacing: '0.06em',
   textTransform: 'uppercase',
-  borderBottom: '1px solid #1e1e35',
+  borderBottom: '1px solid #e2e8f0',
   whiteSpace: 'nowrap',
+  background: '#ffffff',
 }
 
 const tdStyle = {
   padding: '10px 12px',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '12px',
-  color: '#94a3b8',
+  color: '#64748b',
   verticalAlign: 'top',
 }
 
@@ -383,8 +386,8 @@ const tdPeptideStyle = (color) => ({
 
 const warningBoxStyle = {
   marginTop: '20px',
-  background: '#1a1000',
-  border: '1px solid #78350f44',
+  background: '#fffbeb',
+  border: '1px solid #fde68a',
   borderRadius: '8px',
   padding: '14px 18px',
 }

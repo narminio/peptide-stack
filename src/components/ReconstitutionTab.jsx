@@ -156,7 +156,7 @@ export default function ReconstitutionTab() {
               Concentration: <ResultVal>{concResult.concMcgMl} mcg/mL</ResultVal>{' '}
               ({concResult.concMgMl} mg/mL)
               <br />
-              Then use the <strong style={{ color: '#a78bfa' }}>Dosing Calc</strong> tab to find your draw volume.
+              Then use the <strong style={{ color: '#7c3aed' }}>Dosing Calc</strong> tab to find your draw volume.
             </ResultBox>
           )}
 
@@ -185,8 +185,8 @@ export default function ReconstitutionTab() {
             </thead>
             <tbody>
               {PEPTIDE_STABILITY.map((p, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid #12121e' }}>
-                  <td style={{ ...tdStyle, color: '#e2e8f0', fontWeight: 500 }}>{p.name}</td>
+                <tr key={i} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                  <td style={{ ...tdStyle, color: '#0f172a', fontWeight: 500 }}>{p.name}</td>
                   <td style={tdStyle}>{p.storage}</td>
                   <td style={tdStyle}>{p.life}</td>
                   <td style={{ ...tdStyle, color: '#4ade80' }}>{p.freeze}</td>
@@ -235,14 +235,14 @@ function ResultBox({ children }) {
 }
 
 function ResultVal({ children }) {
-  return <span style={{ color: '#a78bfa', fontWeight: 600 }}>{children}</span>
+  return <span style={{ color: '#7c3aed', fontWeight: 600 }}>{children}</span>
 }
 
 function CommonConc({ vial, bac }) {
   const conc = ((vial * 1000) / bac).toFixed(0)
   return (
     <span style={commonConcItemStyle}>
-      {vial}mg + {bac}mL = <span style={{ color: '#a78bfa' }}>{conc} mcg/mL</span>
+      {vial}mg + {bac}mL = <span style={{ color: '#7c3aed' }}>{conc} mcg/mL</span>
     </span>
   )
 }
@@ -251,18 +251,19 @@ const sectionTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '16px',
   fontWeight: 700,
-  color: '#f1f5f9',
+  color: '#0f172a',
   marginBottom: '16px',
 }
 
 const stepCardStyle = {
   display: 'flex',
   gap: '16px',
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '8px',
   padding: '14px 18px',
   alignItems: 'flex-start',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const stepNumStyle = {
@@ -280,7 +281,7 @@ const stepTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '13px',
   fontWeight: 600,
-  color: '#e2e8f0',
+  color: '#0f172a',
   marginBottom: '4px',
 }
 
@@ -292,10 +293,11 @@ const stepBodyStyle = {
 }
 
 const calcCardStyle = {
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '10px',
   padding: '20px',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const modeToggleStyle = {
@@ -306,10 +308,10 @@ const modeToggleStyle = {
 }
 
 const modeButtonStyle = (active) => ({
-  background: active ? '#1e1040' : 'transparent',
-  border: `1px solid ${active ? '#7c3aed' : '#1e1e35'}`,
+  background: active ? '#f5f3ff' : '#ffffff',
+  border: `1px solid ${active ? '#7c3aed' : '#e2e8f0'}`,
   borderRadius: '6px',
-  color: active ? '#a78bfa' : '#475569',
+  color: active ? '#7c3aed' : '#64748b',
   cursor: 'pointer',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '11px',
@@ -328,15 +330,15 @@ const calcRowStyle = {
 const calcLabelStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '10px',
-  color: '#475569',
+  color: '#64748b',
   letterSpacing: '0.1em',
 }
 
 const calcInputStyle = {
-  background: '#0a0a14',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '6px',
-  color: '#e2e8f0',
+  color: '#0f172a',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '14px',
   padding: '10px 12px',
@@ -345,10 +347,10 @@ const calcInputStyle = {
 }
 
 const resultBoxStyle = {
-  background: '#0a0a14',
-  border: '1px solid #7c3aed44',
+  background: '#f5f3ff',
+  border: '1px solid #ede9fe',
   borderRadius: '6px',
-  color: '#94a3b8',
+  color: '#64748b',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '13px',
   lineHeight: 1.7,
@@ -371,8 +373,8 @@ const commonConcsLabelStyle = {
 }
 
 const commonConcItemStyle = {
-  background: '#12121e',
-  border: '1px solid #1e1e35',
+  background: '#f8fafc',
+  border: '1px solid #e2e8f0',
   borderRadius: '4px',
   color: '#64748b',
   fontSize: '11px',
@@ -389,15 +391,15 @@ const tableStyle = {
 const thStyle = {
   textAlign: 'left',
   padding: '8px 12px',
-  color: '#475569',
+  color: '#64748b',
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '11px',
   fontWeight: 600,
   letterSpacing: '0.06em',
   textTransform: 'uppercase',
-  borderBottom: '1px solid #1e1e35',
+  borderBottom: '1px solid #e2e8f0',
   whiteSpace: 'nowrap',
-  background: '#0f0f1a',
+  background: '#ffffff',
 }
 
 const tdStyle = {
@@ -408,8 +410,8 @@ const tdStyle = {
 }
 
 const warningBoxStyle = {
-  background: '#1a1000',
-  border: '1px solid #78350f44',
+  background: '#fffbeb',
+  border: '1px solid #fde68a',
   borderRadius: '8px',
   padding: '16px 18px',
   marginTop: '4px',

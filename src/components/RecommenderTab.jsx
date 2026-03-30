@@ -14,10 +14,10 @@ const GOALS = [
 ]
 
 const RESEARCH_COLORS = {
-  robust:    { bg: '#14532d', color: '#4ade80', label: 'ROBUST' },
-  moderate:  { bg: '#1e3a5f', color: '#60a5fa', label: 'MODERATE' },
-  limited:   { bg: '#3b2200', color: '#fb923c', label: 'LIMITED' },
-  anecdotal: { bg: '#2d1f3d', color: '#c084fc', label: 'ANECDOTAL' },
+  robust:    { bg: '#dcfce7', color: '#166534', label: 'ROBUST' },
+  moderate:  { bg: '#dbeafe', color: '#1e40af', label: 'MODERATE' },
+  limited:   { bg: '#ffedd5', color: '#9a3412', label: 'LIMITED' },
+  anecdotal: { bg: '#f3e8ff', color: '#6b21a8', label: 'ANECDOTAL' },
 }
 
 const ROUTE_ABBR = {
@@ -202,7 +202,7 @@ export default function RecommenderTab({ onRecommendation, recommendation, onVie
           {recommendation.warnings?.length > 0 && (
             <InfoBox title="Warnings & Considerations" accent="#f87171">
               {recommendation.warnings.map((w, i) => (
-                <p key={i} style={{ ...bodyTextStyle, color: '#fca5a5', marginBottom: '6px' }}>
+                <p key={i} style={{ ...bodyTextStyle, color: '#dc2626', marginBottom: '6px' }}>
                   ⚠ {w}
                 </p>
               ))}
@@ -236,20 +236,20 @@ function PeptideCard({ peptide }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
           <span style={doseStyle}>{peptide.dose} · {peptide.frequency}</span>
-          <span style={{ color: '#475569', fontSize: '12px' }}>{expanded ? '▲' : '▼'}</span>
+          <span style={{ color: '#94a3b8', fontSize: '12px' }}>{expanded ? '▲' : '▼'}</span>
         </div>
       </div>
 
       {expanded && (
         <div style={cardBodyStyle} className="fade-in">
-          <p style={{ ...bodyTextStyle, marginBottom: '12px' }}><strong style={{ color: '#94a3b8' }}>Mechanism:</strong> {peptide.mechanism}</p>
-          <p style={{ ...bodyTextStyle, marginBottom: '12px' }}><strong style={{ color: '#94a3b8' }}>Timing:</strong> {peptide.timing}</p>
-          <p style={{ ...bodyTextStyle, marginBottom: '12px' }}><strong style={{ color: '#94a3b8' }}>Why this stack:</strong> {peptide.rationale}</p>
-          <p style={{ ...bodyTextStyle, marginBottom: peptide.sideEffects?.length ? '12px' : '0' }}><strong style={{ color: '#94a3b8' }}>Cycle:</strong> {peptide.cycleLength}</p>
+          <p style={{ ...bodyTextStyle, marginBottom: '12px' }}><strong style={{ color: '#64748b' }}>Mechanism:</strong> {peptide.mechanism}</p>
+          <p style={{ ...bodyTextStyle, marginBottom: '12px' }}><strong style={{ color: '#64748b' }}>Timing:</strong> {peptide.timing}</p>
+          <p style={{ ...bodyTextStyle, marginBottom: '12px' }}><strong style={{ color: '#64748b' }}>Why this stack:</strong> {peptide.rationale}</p>
+          <p style={{ ...bodyTextStyle, marginBottom: peptide.sideEffects?.length ? '12px' : '0' }}><strong style={{ color: '#64748b' }}>Cycle:</strong> {peptide.cycleLength}</p>
           {peptide.sideEffects?.length > 0 && (
             <div>
-              <strong style={{ color: '#94a3b8', fontSize: '12px' }}>Side effects: </strong>
-              <span style={{ ...bodyTextStyle, color: '#94a3b8' }}>{peptide.sideEffects.join(', ')}</span>
+              <strong style={{ color: '#64748b', fontSize: '12px' }}>Side effects: </strong>
+              <span style={{ ...bodyTextStyle, color: '#64748b' }}>{peptide.sideEffects.join(', ')}</span>
             </div>
           )}
         </div>
@@ -282,7 +282,7 @@ function InfoBox({ title, accent = '#7c3aed', children }) {
 function LabeledInput({ label, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-      <label style={{ color: '#475569', fontSize: '11px', letterSpacing: '0.08em' }}>{label.toUpperCase()}</label>
+      <label style={{ color: '#64748b', fontSize: '11px', letterSpacing: '0.08em' }}>{label.toUpperCase()}</label>
       {children}
     </div>
   )
@@ -297,10 +297,10 @@ const goalGridStyle = {
 }
 
 const goalButtonStyle = (active) => ({
-  background: active ? '#1e1040' : '#0f0f1a',
-  border: `1px solid ${active ? '#7c3aed' : '#1e1e35'}`,
+  background: active ? '#f5f3ff' : '#ffffff',
+  border: `1px solid ${active ? '#7c3aed' : '#e2e8f0'}`,
   borderRadius: '8px',
-  color: active ? '#c4b5fd' : '#64748b',
+  color: active ? '#7c3aed' : '#64748b',
   cursor: 'pointer',
   padding: '12px 14px',
   textAlign: 'left',
@@ -320,7 +320,7 @@ const goalLabelStyle = {
 const goalDescStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '11px',
-  color: '#475569',
+  color: '#94a3b8',
   lineHeight: 1.4,
 }
 
@@ -331,10 +331,10 @@ const profileGridStyle = {
 }
 
 const inputStyle = {
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '6px',
-  color: '#e2e8f0',
+  color: '#0f172a',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '13px',
   padding: '8px 10px',
@@ -344,10 +344,10 @@ const inputStyle = {
 
 const selectStyle = {
   ...{
-    background: '#0f0f1a',
-    border: '1px solid #1e1e35',
+    background: '#ffffff',
+    border: '1px solid #e2e8f0',
     borderRadius: '6px',
-    color: '#e2e8f0',
+    color: '#0f172a',
     fontFamily: "'IBM Plex Mono', monospace",
     fontSize: '13px',
     padding: '8px 10px',
@@ -357,10 +357,10 @@ const selectStyle = {
 }
 
 const textareaStyle = {
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '6px',
-  color: '#e2e8f0',
+  color: '#0f172a',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '13px',
   padding: '10px 12px',
@@ -371,7 +371,7 @@ const textareaStyle = {
 }
 
 const submitButtonStyle = (loading) => ({
-  background: loading ? '#3f3f5a' : '#7c3aed',
+  background: loading ? '#ede9fe' : '#7c3aed',
   border: 'none',
   borderRadius: '8px',
   color: '#fff',
@@ -404,7 +404,7 @@ const sectionTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '13px',
   fontWeight: 600,
-  color: '#64748b',
+  color: '#0f172a',
   letterSpacing: '0.08em',
   textTransform: 'uppercase',
   marginBottom: '12px',
@@ -417,7 +417,7 @@ const toggleHeaderStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '13px',
   fontWeight: 600,
-  color: '#64748b',
+  color: '#0f172a',
   letterSpacing: '0.08em',
   textTransform: 'uppercase',
   padding: '0',
@@ -440,14 +440,14 @@ const resultTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '18px',
   fontWeight: 700,
-  color: '#f1f5f9',
+  color: '#0f172a',
 }
 
 const scheduleButtonStyle = {
-  background: 'transparent',
-  border: '1px solid #7c3aed',
+  background: '#f5f3ff',
+  border: '1px solid #ede9fe',
   borderRadius: '6px',
-  color: '#a78bfa',
+  color: '#7c3aed',
   cursor: 'pointer',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '12px',
@@ -457,21 +457,23 @@ const scheduleButtonStyle = {
 }
 
 const rationaleBoxStyle = {
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '10px',
   padding: '18px 20px',
   marginBottom: '20px',
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const cardStyle = {
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '10px',
   overflow: 'hidden',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const cardHeaderStyle = {
@@ -486,7 +488,7 @@ const cardHeaderStyle = {
 
 const cardBodyStyle = {
   padding: '0 18px 16px',
-  borderTop: '1px solid #1a1a2e',
+  borderTop: '1px solid #e2e8f0',
   paddingTop: '14px',
 }
 
@@ -494,7 +496,7 @@ const peptideNameStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '15px',
   fontWeight: 600,
-  color: '#e2e8f0',
+  color: '#0f172a',
 }
 
 const badgeStyle = (level) => ({
@@ -509,7 +511,7 @@ const badgeStyle = (level) => ({
 })
 
 const routeBadgeStyle = {
-  background: '#1a1a2e',
+  background: '#f1f5f9',
   color: '#64748b',
   borderRadius: '4px',
   fontSize: '10px',
@@ -525,10 +527,11 @@ const doseStyle = {
 }
 
 const infoBoxStyle = {
-  background: '#0a0a14',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '8px',
   padding: '16px 18px',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const synergyRowStyle = {
@@ -542,8 +545,8 @@ const synergyRowStyle = {
 const synergyPillsStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '11px',
-  color: '#a78bfa',
-  background: '#1e1040',
+  color: '#7c3aed',
+  background: '#f5f3ff',
   borderRadius: '4px',
   padding: '2px 8px',
   whiteSpace: 'nowrap',
@@ -553,7 +556,7 @@ const synergyPillsStyle = {
 const sectionLabelStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '10px',
-  color: '#475569',
+  color: '#64748b',
   letterSpacing: '0.1em',
   textTransform: 'uppercase',
 }
@@ -561,6 +564,6 @@ const sectionLabelStyle = {
 const bodyTextStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '13px',
-  color: '#94a3b8',
+  color: '#64748b',
   lineHeight: 1.7,
 }

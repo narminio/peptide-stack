@@ -117,7 +117,7 @@ export default function DosingTab({ recommendation }) {
                 p.name.toLowerCase() === row.name.toLowerCase()
               )
               return (
-                <tr key={i} style={{ borderBottom: '1px solid #12121e' }}>
+                <tr key={i} style={{ borderBottom: '1px solid #e2e8f0' }}>
                   <td style={tdStyle}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <input
@@ -132,7 +132,7 @@ export default function DosingTab({ recommendation }) {
                           if (p) applyPreset(i, p)
                           e.target.value = ''
                         }}
-                        style={{ ...inputStyle, fontSize: '11px', color: '#475569' }}
+                        style={{ ...inputStyle, fontSize: '11px', color: '#94a3b8' }}
                         defaultValue=""
                       >
                         <option value="" disabled>preset...</option>
@@ -172,17 +172,17 @@ export default function DosingTab({ recommendation }) {
                   <td style={{ ...tdStyle, ...resultCellStyle }}>
                     {result ? (
                       <span>
-                        <span style={{ color: '#e2e8f0' }}>{result.concMcgMl}</span>
-                        <span style={{ color: '#475569', fontSize: '10px' }}> mcg/mL</span>
+                        <span style={{ color: '#0f172a' }}>{result.concMcgMl}</span>
+                        <span style={{ color: '#94a3b8', fontSize: '10px' }}> mcg/mL</span>
                       </span>
                     ) : '—'}
                   </td>
                   <td style={{ ...tdStyle, ...resultCellStyle }}>
                     {result ? (
                       <span>
-                        <span style={{ color: '#e2e8f0' }}>{result.drawMl}</span>
-                        <span style={{ color: '#475569', fontSize: '10px' }}> mL</span>
-                        <span style={{ color: '#475569', fontSize: '10px', display: 'block' }}>
+                        <span style={{ color: '#0f172a' }}>{result.drawMl}</span>
+                        <span style={{ color: '#94a3b8', fontSize: '10px' }}> mL</span>
+                        <span style={{ color: '#94a3b8', fontSize: '10px', display: 'block' }}>
                           ({result.drawUl} μL)
                         </span>
                       </span>
@@ -191,7 +191,7 @@ export default function DosingTab({ recommendation }) {
                   <td style={{ ...tdStyle, ...resultCellStyle }}>
                     {result ? (
                       <span style={{ color: '#a78bfa', fontWeight: 600 }}>
-                        {result.units} <span style={{ color: '#475569', fontWeight: 400, fontSize: '10px' }}>U</span>
+                        {result.units} <span style={{ color: '#94a3b8', fontWeight: 400, fontSize: '10px' }}>U</span>
                       </span>
                     ) : '—'}
                   </td>
@@ -214,7 +214,7 @@ export default function DosingTab({ recommendation }) {
           <span style={{ color: '#a78bfa' }}>■</span> Units column = tick marks on a U-100 (100 IU/mL) insulin syringe
         </div>
         <div style={legendItemStyle}>
-          <span style={{ color: '#475569' }}>■</span> Standard BAC water: 2 mL per vial gives clean concentration math
+          <span style={{ color: '#94a3b8' }}>■</span> Standard BAC water: 2 mL per vial gives clean concentration math
         </div>
       </div>
 
@@ -233,9 +233,9 @@ export default function DosingTab({ recommendation }) {
 
 function ConversionRow({ label, value }) {
   return (
-    <div style={{ display: 'flex', gap: '12px', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #12121e' }}>
+    <div style={{ display: 'flex', gap: '12px', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #e2e8f0' }}>
       <span style={{ color: '#64748b', fontSize: '12px' }}>{label}</span>
-      <span style={{ color: '#94a3b8', fontSize: '12px' }}>{value}</span>
+      <span style={{ color: '#0f172a', fontSize: '12px' }}>{value}</span>
     </div>
   )
 }
@@ -245,13 +245,14 @@ const hintStyle = {
   fontSize: '13px',
   marginBottom: '16px',
   lineHeight: 1.6,
+  fontFamily: "'IBM Plex Mono', monospace",
 }
 
 const infoBannerStyle = {
-  background: '#1e1040',
-  border: '1px solid #7c3aed44',
+  background: '#f5f3ff',
+  border: '1px solid #ede9fe',
   borderRadius: '6px',
-  color: '#a78bfa',
+  color: '#7c3aed',
   fontSize: '12px',
   padding: '10px 14px',
   marginBottom: '16px',
@@ -268,14 +269,15 @@ const tableStyle = {
 const thStyle = {
   textAlign: 'left',
   padding: '8px 10px',
-  color: '#475569',
+  color: '#64748b',
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '11px',
   fontWeight: 600,
   letterSpacing: '0.06em',
   textTransform: 'uppercase',
-  borderBottom: '1px solid #1e1e35',
+  borderBottom: '1px solid #e2e8f0',
   whiteSpace: 'nowrap',
+  background: '#ffffff',
 }
 
 const tdStyle = {
@@ -284,10 +286,10 @@ const tdStyle = {
 }
 
 const inputStyle = {
-  background: '#0a0a14',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '5px',
-  color: '#e2e8f0',
+  color: '#0f172a',
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '13px',
   padding: '6px 8px',
@@ -310,8 +312,8 @@ const deleteButtonStyle = {
 }
 
 const addButtonStyle = {
-  background: 'transparent',
-  border: '1px dashed #3f3f5a',
+  background: '#ffffff',
+  border: '1px dashed #e2e8f0',
   borderRadius: '6px',
   color: '#7c3aed',
   cursor: 'pointer',
@@ -330,23 +332,25 @@ const legendStyle = {
 
 const legendItemStyle = {
   fontSize: '12px',
-  color: '#475569',
+  color: '#64748b',
+  fontFamily: "'IBM Plex Mono', monospace",
 }
 
 const conversionBoxStyle = {
   marginTop: '24px',
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
   borderRadius: '8px',
   padding: '16px 20px',
   maxWidth: '360px',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
 }
 
 const conversionTitleStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '12px',
   fontWeight: 600,
-  color: '#475569',
+  color: '#0f172a',
   letterSpacing: '0.08em',
   textTransform: 'uppercase',
   display: 'block',

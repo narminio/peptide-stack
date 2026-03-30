@@ -216,283 +216,283 @@ const PRODUCTS = [
 
 const CATEGORIES = ['All', 'Fat Loss', 'Muscle Building', 'Recovery', 'Cognitive', 'Sleep', 'Sexual Health', 'Anti-Aging', 'Immune', 'Wellness', 'Essentials']
 
-const RESEARCH_COLORS = {
-  robust:    { bg: '#14532d', color: '#4ade80' },
-  moderate:  { bg: '#1e3a5f', color: '#60a5fa' },
-  limited:   { bg: '#3b2200', color: '#fb923c' },
-  anecdotal: { bg: '#2d1f3d', color: '#c084fc' },
+const CATEGORY_COLORS = {
+  'Fat Loss':       { bg: 'linear-gradient(135deg, #fdf2f8, #fce7f3)', border: '#f9a8d4', badge: '#db2777' },
+  'Muscle Building':{ bg: 'linear-gradient(135deg, #f0fdf4, #dcfce7)', border: '#86efac', badge: '#16a34a' },
+  'Recovery':       { bg: 'linear-gradient(135deg, #eff6ff, #dbeafe)', border: '#93c5fd', badge: '#2563eb' },
+  'Cognitive':      { bg: 'linear-gradient(135deg, #faf5ff, #ede9fe)', border: '#c4b5fd', badge: '#7c3aed' },
+  'Sleep':          { bg: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)', border: '#7dd3fc', badge: '#0284c7' },
+  'Sexual Health':  { bg: 'linear-gradient(135deg, #fff7ed, #fed7aa)', border: '#fdba74', badge: '#ea580c' },
+  'Anti-Aging':     { bg: 'linear-gradient(135deg, #fefce8, #fef9c3)', border: '#fde047', badge: '#ca8a04' },
+  'Immune':         { bg: 'linear-gradient(135deg, #f0fdfa, #ccfbf1)', border: '#6ee7b7', badge: '#059669' },
+  'Wellness':       { bg: 'linear-gradient(135deg, #f8fafc, #f1f5f9)', border: '#cbd5e1', badge: '#475569' },
+  'Essentials':     { bg: 'linear-gradient(135deg, #f8fafc, #f1f5f9)', border: '#cbd5e1', badge: '#475569' },
 }
 
-const RESEARCH_LABELS = { robust: 'ROBUST', moderate: 'MODERATE', limited: 'LIMITED', anecdotal: 'ANECDOTAL' }
+const RESEARCH_META = {
+  robust:    { label: 'Robust Evidence',   color: '#15803d', bg: '#f0fdf4', border: '#bbf7d0' },
+  moderate:  { label: 'Moderate Evidence', color: '#1d4ed8', bg: '#eff6ff', border: '#bfdbfe' },
+  limited:   { label: 'Limited Evidence',  color: '#b45309', bg: '#fffbeb', border: '#fde68a' },
+  anecdotal: { label: 'Anecdotal',         color: '#7c3aed', bg: '#faf5ff', border: '#ede9fe' },
+}
 
 export default function ProductsTab() {
   const [filter, setFilter] = useState('All')
-
   const visible = filter === 'All' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter)
 
   return (
-    <div style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
-      <div style={heroBannerStyle}>
+    <div>
+      {/* Page header */}
+      <div style={pageHeaderStyle}>
         <div>
-          <h2 style={heroTitleStyle}>AminoClub.com</h2>
-          <p style={heroSubStyle}>Research-grade peptides · Third-party tested · Ships from USA</p>
-          <p style={heroCodeStyle}>Use code <strong style={{ color: '#a78bfa' }}>NICK1898</strong> at checkout</p>
+          <h1 style={pageTitleStyle}>Shop Research Peptides</h1>
+          <p style={pageSubStyle}>
+            All products sourced from AminoClub.com — 99%+ purity, COA with every batch, ships from USA.
+            Use code <strong style={{ color: '#7c3aed' }}>NICK1898</strong> at checkout.
+          </p>
         </div>
-        <a
-          href={`https://www.aminoclub.com${AFF}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={heroLinkStyle}
-        >
-          Visit Store ↗
+        <a href={`https://www.aminoclub.com${AFF}`} target="_blank" rel="noopener noreferrer" style={visitStoreStyle}>
+          Visit AminoClub.com ↗
         </a>
       </div>
 
-      {/* Category filter */}
+      {/* Category filters */}
       <div style={filterRowStyle}>
         {CATEGORIES.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            style={filterButtonStyle(filter === cat)}
-          >
+          <button key={cat} onClick={() => setFilter(cat)} style={filterBtnStyle(filter === cat)}>
             {cat}
           </button>
         ))}
       </div>
 
-      {/* Product grid */}
+      {/* Grid */}
       <div style={gridStyle}>
-        {visible.map(product => (
-          <ProductCard key={product.name} product={product} />
-        ))}
+        {visible.map(product => <ProductCard key={product.name} product={product} />)}
       </div>
 
       <p style={disclaimerStyle}>
-        For research purposes only. These statements have not been evaluated by the FDA. Always verify certificate of analysis before use.
+        PeptideStack is an independent affiliate of AminoClub.com. For research purposes only.
+        These statements have not been evaluated by the FDA. Not intended to diagnose, treat, cure, or prevent any disease.
       </p>
     </div>
   )
 }
 
 function ProductCard({ product }) {
-  const level = RESEARCH_COLORS[product.research] || RESEARCH_COLORS.anecdotal
-  const label = RESEARCH_LABELS[product.research] || 'ANECDOTAL'
+  const catStyle = CATEGORY_COLORS[product.category] || CATEGORY_COLORS['Wellness']
+  const researchMeta = RESEARCH_META[product.research] || RESEARCH_META.anecdotal
 
   return (
-    <div style={cardStyle}>
-      <div style={cardTopStyle}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', marginBottom: '6px' }}>
-          <h3 style={cardNameStyle}>{product.name}</h3>
-          <span style={researchBadgeStyle(level)}>{label}</span>
-        </div>
-        <span style={categoryBadgeStyle}>{product.category}</span>
+    <div className="card-hover" style={cardStyle}>
+      {/* Color header */}
+      <div style={{ ...cardHeaderStyle, background: catStyle.bg, borderBottom: `1px solid ${catStyle.border}` }}>
+        <span style={catBadgeStyle(catStyle.badge)}>{product.category}</span>
+        <span style={researchPillStyle(researchMeta)}>{researchMeta.label}</span>
       </div>
 
-      <p style={cardDescStyle}>{product.desc}</p>
+      <div style={cardBodyStyle}>
+        <h3 style={cardNameStyle}>{product.name}</h3>
+        <p style={cardDescStyle}>{product.desc}</p>
 
-      <div style={cardMetaStyle}>
-        <div style={metaRowStyle}>
-          <span style={metaLabelStyle}>Routes</span>
-          <span style={metaValueStyle}>{product.routes.join(' · ')}</span>
+        <div style={metaBoxStyle}>
+          <div style={metaRowStyle}>
+            <span style={metaKeyStyle}>Route</span>
+            <span style={metaValStyle}>{product.routes.join(' · ')}</span>
+          </div>
+          <div style={metaRowStyle}>
+            <span style={metaKeyStyle}>Dose</span>
+            <span style={metaValStyle}>{product.commonDose}</span>
+          </div>
         </div>
-        <div style={metaRowStyle}>
-          <span style={metaLabelStyle}>Common Dose</span>
-          <span style={metaValueStyle}>{product.commonDose}</span>
-        </div>
+
+        <a href={product.link} target="_blank" rel="noopener noreferrer" style={shopBtnStyle}>
+          View on AminoClub.com →
+        </a>
       </div>
-
-      <a
-        href={product.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={shopButtonStyle}
-      >
-        Shop on AminoClub.com ↗
-      </a>
     </div>
   )
 }
 
-const heroBannerStyle = {
+const pageHeaderStyle = {
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
-  background: 'linear-gradient(135deg, #0f0f1a 0%, #1e1040 100%)',
-  border: '1px solid #7c3aed44',
-  borderRadius: '12px',
-  padding: '20px 24px',
-  marginBottom: '20px',
+  alignItems: 'flex-start',
+  gap: '20px',
+  marginBottom: '24px',
   flexWrap: 'wrap',
-  gap: '12px',
 }
 
-const heroTitleStyle = {
-  fontFamily: "'Space Grotesk', sans-serif",
-  fontSize: '18px',
-  fontWeight: 700,
-  color: '#f1f5f9',
-  marginBottom: '4px',
+const pageTitleStyle = {
+  fontSize: '28px',
+  fontWeight: 800,
+  color: '#0f172a',
+  letterSpacing: '-0.02em',
+  marginBottom: '6px',
 }
 
-const heroSubStyle = {
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '12px',
+const pageSubStyle = {
+  fontSize: '14px',
   color: '#64748b',
-  marginBottom: '4px',
+  lineHeight: 1.6,
+  maxWidth: '520px',
 }
 
-const heroCodeStyle = {
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '12px',
-  color: '#64748b',
-}
-
-const heroLinkStyle = {
-  background: '#7c3aed',
-  border: 'none',
-  borderRadius: '7px',
+const visitStoreStyle = {
+  background: '#0f172a',
+  borderRadius: '9px',
   color: '#fff',
-  fontFamily: "'Space Grotesk', sans-serif",
   fontSize: '13px',
-  fontWeight: 600,
-  padding: '10px 18px',
-  textDecoration: 'none',
+  fontWeight: 700,
+  fontFamily: "'Space Grotesk', sans-serif",
+  padding: '11px 20px',
   whiteSpace: 'nowrap',
+  flexShrink: 0,
 }
 
 const filterRowStyle = {
   display: 'flex',
   gap: '6px',
   flexWrap: 'wrap',
-  marginBottom: '20px',
+  marginBottom: '24px',
 }
 
-const filterButtonStyle = (active) => ({
-  background: active ? '#1e1040' : 'transparent',
-  border: `1px solid ${active ? '#7c3aed' : '#1e1e35'}`,
-  borderRadius: '20px',
-  color: active ? '#a78bfa' : '#475569',
+const filterBtnStyle = (active) => ({
+  background: active ? '#0f172a' : '#fff',
+  border: `1.5px solid ${active ? '#0f172a' : '#e2e8f0'}`,
+  borderRadius: '999px',
+  color: active ? '#fff' : '#475569',
   cursor: 'pointer',
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '11px',
-  padding: '5px 12px',
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: '13px',
+  fontWeight: active ? 600 : 500,
+  padding: '6px 16px',
   transition: 'all 0.15s',
-  letterSpacing: '0.03em',
 })
 
 const gridStyle = {
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-  gap: '12px',
-  marginBottom: '24px',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+  gap: '16px',
+  marginBottom: '32px',
 }
 
 const cardStyle = {
-  background: '#0f0f1a',
-  border: '1px solid #1e1e35',
-  borderRadius: '10px',
+  background: '#fff',
+  border: '1.5px solid #e2e8f0',
+  borderRadius: '14px',
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+}
+
+const cardHeaderStyle = {
+  padding: '14px 16px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '8px',
+}
+
+const catBadgeStyle = (color) => ({
+  background: color,
+  color: '#fff',
+  borderRadius: '999px',
+  fontSize: '11px',
+  fontWeight: 700,
+  fontFamily: "'Space Grotesk', sans-serif",
+  padding: '3px 10px',
+})
+
+const researchPillStyle = (meta) => ({
+  background: meta.bg,
+  border: `1px solid ${meta.border}`,
+  color: meta.color,
+  borderRadius: '999px',
+  fontSize: '10px',
+  fontWeight: 600,
+  fontFamily: "'IBM Plex Mono', monospace",
+  padding: '2px 8px',
+  letterSpacing: '0.02em',
+})
+
+const cardBodyStyle = {
   padding: '16px',
   display: 'flex',
   flexDirection: 'column',
   gap: '12px',
-}
-
-const cardTopStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '6px',
-}
-
-const cardNameStyle = {
-  fontFamily: "'Space Grotesk', sans-serif",
-  fontSize: '14px',
-  fontWeight: 700,
-  color: '#f1f5f9',
-}
-
-const researchBadgeStyle = (level) => ({
-  background: level.bg,
-  color: level.color,
-  borderRadius: '4px',
-  fontSize: '9px',
-  fontWeight: 600,
-  letterSpacing: '0.08em',
-  padding: '2px 6px',
-  fontFamily: "'IBM Plex Mono', monospace",
-  whiteSpace: 'nowrap',
-  flexShrink: 0,
-})
-
-const categoryBadgeStyle = {
-  background: '#12121e',
-  color: '#475569',
-  borderRadius: '4px',
-  fontSize: '10px',
-  letterSpacing: '0.06em',
-  padding: '2px 7px',
-  fontFamily: "'IBM Plex Mono', monospace",
-  alignSelf: 'flex-start',
-}
-
-const cardDescStyle = {
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '12px',
-  color: '#64748b',
-  lineHeight: 1.7,
   flex: 1,
 }
 
-const cardMetaStyle = {
+const cardNameStyle = {
+  fontSize: '16px',
+  fontWeight: 700,
+  color: '#0f172a',
+  letterSpacing: '-0.01em',
+}
+
+const cardDescStyle = {
+  fontSize: '13px',
+  color: '#64748b',
+  lineHeight: 1.65,
+  flex: 1,
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontWeight: 400,
+}
+
+const metaBoxStyle = {
+  background: '#f8fafc',
+  border: '1px solid #e2e8f0',
+  borderRadius: '8px',
+  padding: '10px 12px',
   display: 'flex',
   flexDirection: 'column',
   gap: '6px',
-  borderTop: '1px solid #12121e',
-  paddingTop: '10px',
 }
 
 const metaRowStyle = {
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
   gap: '8px',
 }
 
-const metaLabelStyle = {
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '10px',
-  color: '#334155',
-  letterSpacing: '0.06em',
-  flexShrink: 0,
-}
-
-const metaValueStyle = {
-  fontFamily: "'IBM Plex Mono', monospace",
+const metaKeyStyle = {
   fontSize: '11px',
   color: '#94a3b8',
+  fontFamily: "'IBM Plex Mono', monospace",
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+}
+
+const metaValStyle = {
+  fontSize: '12px',
+  color: '#475569',
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontWeight: 500,
   textAlign: 'right',
 }
 
-const shopButtonStyle = {
-  background: 'transparent',
-  border: '1px solid #7c3aed',
-  borderRadius: '6px',
-  color: '#a78bfa',
-  cursor: 'pointer',
-  fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '11px',
-  padding: '9px 12px',
-  textAlign: 'center',
-  textDecoration: 'none',
+const shopBtnStyle = {
   display: 'block',
-  letterSpacing: '0.03em',
-  transition: 'all 0.15s',
+  background: '#0f172a',
+  border: 'none',
+  borderRadius: '8px',
+  color: '#fff',
+  fontSize: '13px',
+  fontWeight: 700,
+  fontFamily: "'Space Grotesk', sans-serif",
+  padding: '11px 16px',
+  textAlign: 'center',
+  transition: 'background 0.2s',
 }
 
 const disclaimerStyle = {
   fontSize: '11px',
-  color: '#334155',
+  color: '#94a3b8',
   lineHeight: 1.6,
-  borderTop: '1px solid #12121e',
-  paddingTop: '16px',
+  borderTop: '1px solid #e2e8f0',
+  paddingTop: '20px',
   fontFamily: "'IBM Plex Mono', monospace",
+  textAlign: 'center',
 }
