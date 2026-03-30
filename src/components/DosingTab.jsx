@@ -1,32 +1,36 @@
 import { useState, useEffect } from 'react'
 
+// sprayUl: atomizer delivers 0.1mL (100μL) per actuation — standard for nasal spray bottles
+// startSprays / maxSprays: dose range expressed as WHOLE spray counts only — mcg derives from concentration
 const NASAL_PRESETS = [
   {
     name: 'Semax',
-    sprayUl: 100,
-    typicalDoseMcg: 300,
+    sprayUl: 100,          // 0.1mL per spray
+    startSprays: 1,        // starting dose: 1 spray
+    maxSprays: 3,          // max dose: 3 sprays
     frequency: '1–2x daily',
     timing: 'Morning, or morning + afternoon',
-    notes: 'BDNF upregulation, cognitive enhancement, neuroprotection. Start at 200mcg and titrate up.',
+    notes: 'BDNF upregulation, cognitive enhancement, neuroprotection. Start at 1 spray and titrate up by 1 spray every few days as tolerated.',
     color: '#7c3aed',
     vialOptions: [
-      { label: '5mg vial',            vialMg: 5,  bacMl: 2.5, note: 'Standard — 5/5 split' },
-      { label: '10mg vial · standard', vialMg: 10, bacMl: 5,   note: '10mg + 5mL → same 200mcg/spray, 2× more doses' },
-      { label: '10mg vial · high-dose', vialMg: 10, bacMl: 2.5, note: '10mg + 2.5mL → 400mcg/spray for higher dose protocols' },
+      { label: '5mg vial',             vialMg: 5,  bacMl: 2.5, note: 'Standard 5/5 split — 2,000 mcg/mL' },
+      { label: '10mg vial · standard', vialMg: 10, bacMl: 5,   note: '10mg + 5mL → same 2,000 mcg/mL, 2× more total sprays' },
+      { label: '10mg vial · high-dose',vialMg: 10, bacMl: 2.5, note: '10mg + 2.5mL → 4,000 mcg/mL, double dose per spray' },
     ],
   },
   {
     name: 'Selank',
-    sprayUl: 100,
-    typicalDoseMcg: 250,
+    sprayUl: 100,          // 0.1mL per spray
+    startSprays: 1,        // starting dose: 1 spray
+    maxSprays: 2,          // max dose: 2 sprays
     frequency: '2–3x daily',
     timing: 'Morning, afternoon, and/or pre-stress event',
-    notes: 'Anxiolytic, nootropic. No sedation. Safe for daily use. Can be used alongside Semax.',
+    notes: 'Anxiolytic, nootropic. No sedation. Safe for daily use. Can stack with Semax — use same atomizer sequentially or separate bottles.',
     color: '#0ea5e9',
     vialOptions: [
-      { label: '5mg vial',             vialMg: 5,  bacMl: 2.5, note: 'Standard — 5/5 split' },
-      { label: '10mg vial · standard', vialMg: 10, bacMl: 5,   note: '10mg + 5mL → same 200mcg/spray, 2× more doses' },
-      { label: '10mg vial · high-dose', vialMg: 10, bacMl: 2.5, note: '10mg + 2.5mL → 400mcg/spray for higher dose protocols' },
+      { label: '5mg vial',             vialMg: 5,  bacMl: 2.5, note: 'Standard 5/5 split — 2,000 mcg/mL' },
+      { label: '10mg vial · standard', vialMg: 10, bacMl: 5,   note: '10mg + 5mL → same 2,000 mcg/mL, 2× more total sprays' },
+      { label: '10mg vial · high-dose',vialMg: 10, bacMl: 2.5, note: '10mg + 2.5mL → 4,000 mcg/mL, double dose per spray' },
     ],
   },
 ]
@@ -414,10 +418,12 @@ function NasalCard({ preset: p }) {
   const [optIdx, setOptIdx] = useState(0)
   const opt = p.vialOptions[optIdx]
 
-  const concMcgMl     = (opt.vialMg * 1000) / opt.bacMl
-  const sprayMcg      = (concMcgMl * p.sprayUl) / 1000
-  const spraysForDose = Math.round(p.typicalDoseMcg / sprayMcg)
-  const totalSprays   = Math.floor((opt.vialMg * 1000) / sprayMcg)
+  // All mcg values derived from concentration × whole spray counts only
+  const concMcgMl   = (opt.vialMg * 1000) / opt.bacMl          // e.g. 2000 mcg/mL
+  const mcgPerSpray = Math.round((concMcgMl * p.sprayUl) / 1000) // e.g. 200 mcg (0.1mL × 2000mcg/mL)
+  const startMcg    = p.startSprays * mcgPerSpray
+  const maxMcg      = p.maxSprays   * mcgPerSpray
+  const totalSprays = Math.floor((opt.vialMg * 1000) / mcgPerSpray)
 
   return (
     <div style={nasalCardStyle(p.color)}>
@@ -438,10 +444,10 @@ function NasalCard({ preset: p }) {
 
       <div style={nasalCardBodyStyle}>
         <div style={nasalStatRowStyle}>
-          <NasalStat label="Reconstitution" value={`${opt.vialMg}mg + ${opt.bacMl}mL BAC water`} color={p.color} />
-          <NasalStat label="Concentration"  value={`${concMcgMl.toFixed(0)} mcg/mL`} color={p.color} />
-          <NasalStat label="Per spray (0.1mL)" value={`${sprayMcg.toFixed(0)} mcg`} color={p.color} />
-          <NasalStat label="Typical dose"   value={`${p.typicalDoseMcg} mcg (${spraysForDose} spray${spraysForDose !== 1 ? 's' : ''})`} color={p.color} />
+          <NasalStat label="Reconstitution"    value={`${opt.vialMg}mg + ${opt.bacMl}mL BAC water`} color={p.color} />
+          <NasalStat label="Concentration"     value={`${concMcgMl.toLocaleString()} mcg/mL`} color={p.color} />
+          <NasalStat label="Per spray (0.1mL)" value={`${mcgPerSpray} mcg`} color={p.color} />
+          <NasalStat label="Dose range"        value={`${p.startSprays}–${p.maxSprays} sprays (${startMcg}–${maxMcg} mcg)`} color={p.color} />
         </div>
         <div style={nasalTimingStyle}>
           <span style={{ color: '#94a3b8', fontSize: '10px', letterSpacing: '0.06em' }}>TIMING · </span>
