@@ -178,7 +178,7 @@ export default function ProductsTab() {
           <p style={heroSubStyle}>Research-grade peptides · Third-party tested · Ships from USA</p>
         </div>
         <a
-          href="https://aminoclub.com"
+          href="https://aminoclub.com?ref=NICK1898"
           target="_blank"
           rel="noopener noreferrer"
           style={heroLinkStyle}
@@ -217,7 +217,7 @@ export default function ProductsTab() {
 function ProductCard({ product }) {
   const level = RESEARCH_COLORS[product.research] || RESEARCH_COLORS.anecdotal
   const label = RESEARCH_LABELS[product.research] || 'ANECDOTAL'
-  const searchUrl = `https://aminoclub.com/search?type=product&q=${encodeURIComponent(product.name)}`
+  const searchUrl = `https://aminoclub.com/search?type=product&q=${encodeURIComponent(product.name)}&ref=NICK1898`
 
   return (
     <div style={cardStyle}>
