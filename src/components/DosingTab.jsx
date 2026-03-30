@@ -1,5 +1,30 @@
 import { useState, useEffect } from 'react'
 
+const NASAL_PRESETS = [
+  {
+    name: 'Semax',
+    vialMg: 5,
+    bacMl: 2.5,
+    sprayUl: 100,
+    typicalDoseMcg: 300,
+    frequency: '1–2x daily',
+    timing: 'Morning, or morning + afternoon',
+    notes: 'BDNF upregulation, cognitive enhancement, neuroprotection. Start at 200mcg and titrate up. Each 0.1mL spray = 200mcg at this concentration.',
+    color: '#7c3aed',
+  },
+  {
+    name: 'Selank',
+    vialMg: 5,
+    bacMl: 2.5,
+    sprayUl: 100,
+    typicalDoseMcg: 250,
+    frequency: '2–3x daily',
+    timing: 'Morning, afternoon, and/or pre-stress event',
+    notes: 'Anxiolytic, nootropic. No sedation. Safe for daily use. Each 0.1mL spray = 200mcg at this concentration. Can be used alongside Semax.',
+    color: '#0ea5e9',
+  },
+]
+
 // Common peptide presets: [name, typical vial mg, typical dose mg]
 const PRESETS = [
   { name: 'BPC-157',          vialMg: '5',  doseMg: '0.5'  },
@@ -227,6 +252,19 @@ export default function DosingTab({ recommendation }) {
           <ConversionRow label="1 mL" value="1,000 μL = 100 units (U-100)" />
         </div>
       </div>
+
+      {/* Intranasal section */}
+      <div style={nasalSectionStyle}>
+        <h3 style={nasalTitleStyle}>Intranasal Dosing — Semax &amp; Selank</h3>
+        <p style={nasalSubStyle}>
+          Intranasal peptides don't use a syringe draw volume — they're administered via nasal spray bottle.
+          Standard setup: <strong>5mg vial + 2.5mL BAC water = 2mg/mL (2,000mcg/mL)</strong>.
+          A standard nasal pump delivers <strong>0.1mL per spray = 200mcg</strong>.
+        </p>
+        <div style={nasalGridStyle}>
+          {NASAL_PRESETS.map(p => <NasalCard key={p.name} preset={p} />)}
+        </div>
+      </div>
     </div>
   )
 }
@@ -361,4 +399,136 @@ const conversionGridStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: '0',
+}
+
+// ── Intranasal components + styles ───────────────────────────────────────────
+
+function NasalCard({ preset: p }) {
+  const concMcgMl = (p.vialMg * 1000) / p.bacMl          // mcg/mL
+  const sprayMcg  = (concMcgMl * p.sprayUl) / 1000       // mcg per spray
+  const spraysForDose = Math.round(p.typicalDoseMcg / sprayMcg)
+
+  return (
+    <div style={nasalCardStyle(p.color)}>
+      <div style={nasalCardHeaderStyle(p.color)}>
+        <span style={nasalCardNameStyle}>{p.name}</span>
+        <span style={nasalCardFreqStyle}>{p.frequency}</span>
+      </div>
+      <div style={nasalCardBodyStyle}>
+        <div style={nasalStatRowStyle}>
+          <NasalStat label="Reconstitution" value={`${p.vialMg}mg + ${p.bacMl}mL BAC water`} color={p.color} />
+          <NasalStat label="Concentration" value={`${concMcgMl.toFixed(0)} mcg/mL`} color={p.color} />
+          <NasalStat label="Per spray (0.1mL)" value={`${sprayMcg.toFixed(0)} mcg`} color={p.color} />
+          <NasalStat label="Typical dose" value={`${p.typicalDoseMcg} mcg (${spraysForDose} spray${spraysForDose !== 1 ? 's' : ''})`} color={p.color} />
+        </div>
+        <div style={nasalTimingStyle}>
+          <span style={{ color: '#94a3b8', fontSize: '10px', letterSpacing: '0.06em' }}>TIMING · </span>
+          {p.timing}
+        </div>
+        <div style={nasalNotesStyle}>{p.notes}</div>
+      </div>
+    </div>
+  )
+}
+
+function NasalStat({ label, value, color }) {
+  return (
+    <div style={nasalStatStyle}>
+      <span style={{ fontSize: '9px', color: '#94a3b8', letterSpacing: '0.08em', display: 'block', marginBottom: '2px' }}>{label.toUpperCase()}</span>
+      <span style={{ fontSize: '12px', color: color, fontWeight: 600 }}>{value}</span>
+    </div>
+  )
+}
+
+const nasalSectionStyle = {
+  marginTop: '36px',
+  paddingTop: '28px',
+  borderTop: '1px solid #e2e8f0',
+}
+
+const nasalTitleStyle = {
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: '14px',
+  fontWeight: 700,
+  color: '#0f172a',
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+  marginBottom: '8px',
+}
+
+const nasalSubStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '12px',
+  color: '#64748b',
+  lineHeight: 1.7,
+  marginBottom: '20px',
+}
+
+const nasalGridStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+  gap: '16px',
+}
+
+const nasalCardStyle = (color) => ({
+  background: '#ffffff',
+  border: `1px solid ${color}33`,
+  borderRadius: '10px',
+  overflow: 'hidden',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+})
+
+const nasalCardHeaderStyle = (color) => ({
+  background: `${color}12`,
+  borderBottom: `1px solid ${color}22`,
+  padding: '12px 16px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+})
+
+const nasalCardNameStyle = {
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: '14px',
+  fontWeight: 700,
+  color: '#0f172a',
+}
+
+const nasalCardFreqStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '11px',
+  color: '#64748b',
+}
+
+const nasalCardBodyStyle = {
+  padding: '14px 16px',
+}
+
+const nasalStatRowStyle = {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '12px',
+  marginBottom: '12px',
+}
+
+const nasalStatStyle = {
+  background: '#f8fafc',
+  borderRadius: '6px',
+  padding: '8px 10px',
+}
+
+const nasalTimingStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '11px',
+  color: '#475569',
+  marginBottom: '10px',
+  paddingBottom: '10px',
+  borderBottom: '1px solid #f1f5f9',
+}
+
+const nasalNotesStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '11px',
+  color: '#64748b',
+  lineHeight: 1.7,
 }
