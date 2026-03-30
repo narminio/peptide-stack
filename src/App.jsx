@@ -56,18 +56,6 @@ export default function App() {
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {/* Shop tab pill — visible outside nav */}
-      <div style={shopPillBarStyle}>
-        <div style={shopPillInnerStyle}>
-          <button
-            onClick={() => setActiveTab('products')}
-            style={shopPillStyle(activeTab === 'products')}
-          >
-            ◇ Shop Peptides
-          </button>
-        </div>
-      </div>
-
       <main style={mainStyle}>
         <div className="fade-in" key={activeTab}>
           {renderTab()}
@@ -83,31 +71,6 @@ export default function App() {
     </div>
   )
 }
-
-const shopPillBarStyle = {
-  background: '#fff',
-  borderBottom: '1px solid #e2e8f0',
-}
-
-const shopPillInnerStyle = {
-  maxWidth: '1100px',
-  margin: '0 auto',
-  padding: '8px 24px',
-}
-
-const shopPillStyle = (active) => ({
-  background: active ? '#0f172a' : 'transparent',
-  border: `1px solid ${active ? '#0f172a' : '#e2e8f0'}`,
-  borderRadius: '999px',
-  color: active ? '#fff' : '#64748b',
-  cursor: 'pointer',
-  fontFamily: "'Space Grotesk', sans-serif",
-  fontSize: '12px',
-  fontWeight: 600,
-  padding: '5px 16px',
-  transition: 'all 0.15s',
-  letterSpacing: '0.01em',
-})
 
 const mainStyle = {
   maxWidth: '1100px',

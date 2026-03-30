@@ -8,8 +8,8 @@ export default function Header({ activeTab, onTabChange }) {
         <div style={logoStyle} onClick={() => onTabChange('recommender')} role="button">
           <div style={logoMarkStyle}>P</div>
           <div>
-            <div style={logoTextStyle}>PeptideStack</div>
-            <div style={logoSubStyle}>by Nick · AminoClub Partner</div>
+            <div style={logoTextStyle}>PeptideStack.AI</div>
+            <div style={logoSubStyle}>AminoClub Partner</div>
           </div>
         </div>
 
@@ -27,6 +27,9 @@ export default function Header({ activeTab, onTabChange }) {
           <NavLink active={activeTab === 'schedule'} onClick={() => onTabChange('schedule')}>
             Schedule
           </NavLink>
+          <NavLink active={activeTab === 'products'} onClick={() => onTabChange('products')} shop>
+            Shop Peptides
+          </NavLink>
         </nav>
 
         {/* CTA */}
@@ -43,9 +46,9 @@ export default function Header({ activeTab, onTabChange }) {
   )
 }
 
-function NavLink({ children, active, onClick }) {
+function NavLink({ children, active, onClick, shop }) {
   return (
-    <button onClick={onClick} style={navLinkStyle(active)}>
+    <button onClick={onClick} style={shop ? shopNavLinkStyle(active) : navLinkStyle(active)}>
       {children}
     </button>
   )
@@ -126,6 +129,21 @@ const navLinkStyle = (active) => ({
   padding: '7px 14px',
   transition: 'all 0.15s',
   whiteSpace: 'nowrap',
+})
+
+const shopNavLinkStyle = (active) => ({
+  background: active ? '#0f172a' : '#f8fafc',
+  border: `1px solid ${active ? '#0f172a' : '#e2e8f0'}`,
+  borderRadius: '999px',
+  color: active ? '#fff' : '#0f172a',
+  cursor: 'pointer',
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: '12px',
+  fontWeight: 600,
+  padding: '6px 14px',
+  transition: 'all 0.15s',
+  whiteSpace: 'nowrap',
+  letterSpacing: '0.01em',
 })
 
 const shopButtonStyle = {

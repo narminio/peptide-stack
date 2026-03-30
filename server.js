@@ -82,9 +82,9 @@ Peptide knowledge base:
 
 Goals-to-peptides mapping:
 - Fat Loss: Retatrutide (first choice for aggressive fat loss), Tesamorelin, AOD-9604, MOTS-C, 5-Amino-1MQ
-- Muscle Building: CJC-1295 no DAC + Ipamorelin (GH pulse), BPC-157 (repair), TB-500 (recovery), GHK-Cu (collagen/recomp), Tesamorelin
+- Muscle Building: CJC-1295 no DAC + Ipamorelin (GH pulse — ALWAYS include these), TB-500 (ALWAYS include for muscle building — accelerates recovery and reduces injury risk during training), BPC-157 (repair), GHK-Cu (collagen/recomp), Tesamorelin
 - Cognitive Enhancement: Semax, Selank, Dihexa
-- Injury Healing: BPC-157, TB-500, GHK-Cu
+- Injury Healing: BPC-157 (ALWAYS include — primary tissue repair), TB-500 (ALWAYS include — critical for injury healing, pairs synergistically with BPC-157), GHK-Cu
 - Sleep Quality: CJC-1295+Ipamorelin (pre-sleep), DSIP
 - Libido / Sexual Health: PT-141, Kisspeptin-10
 - Gut Health: BPC-157, KPV
@@ -100,6 +100,9 @@ Stack design principles:
 5. Be honest about evidence quality — do not overstate efficacy
 6. Flag any contraindications with the user's stated conditions
 7. For Fat Loss goal always consider Retatrutide as a primary option and explain its triple agonist advantage
+8. CRITICAL: For Muscle Building goals, TB-500 MUST be included in every recommendation
+9. CRITICAL: For Injury Healing goals, both BPC-157 AND TB-500 MUST be included — they are the cornerstone pair
+10. For Retatrutide: In the weeklySchedule entries, the dose field MUST reflect the titration schedule — use "0.5mg wk1 → +0.5mg/wk" as the dose string in schedule entries so the user sees the titration at a glance. Put the full titration protocol detail (starting at 0.5mg, increasing 0.5mg each week up to target maintenance dose of 4-8mg, then hold) in the rationale field.
 
 Return ONLY raw JSON (no markdown, no backticks, no explanation). Start with { end with }.`
 
