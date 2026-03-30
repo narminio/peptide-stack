@@ -3,25 +3,31 @@ import { useState, useEffect } from 'react'
 const NASAL_PRESETS = [
   {
     name: 'Semax',
-    vialMg: 5,
-    bacMl: 2.5,
     sprayUl: 100,
     typicalDoseMcg: 300,
     frequency: '1–2x daily',
     timing: 'Morning, or morning + afternoon',
-    notes: 'BDNF upregulation, cognitive enhancement, neuroprotection. Start at 200mcg and titrate up. Each 0.1mL spray = 200mcg at this concentration.',
+    notes: 'BDNF upregulation, cognitive enhancement, neuroprotection. Start at 200mcg and titrate up.',
     color: '#7c3aed',
+    vialOptions: [
+      { label: '5mg vial',            vialMg: 5,  bacMl: 2.5, note: 'Standard — 5/5 split' },
+      { label: '10mg vial · standard', vialMg: 10, bacMl: 5,   note: '10mg + 5mL → same 200mcg/spray, 2× more doses' },
+      { label: '10mg vial · high-dose', vialMg: 10, bacMl: 2.5, note: '10mg + 2.5mL → 400mcg/spray for higher dose protocols' },
+    ],
   },
   {
     name: 'Selank',
-    vialMg: 5,
-    bacMl: 2.5,
     sprayUl: 100,
     typicalDoseMcg: 250,
     frequency: '2–3x daily',
     timing: 'Morning, afternoon, and/or pre-stress event',
-    notes: 'Anxiolytic, nootropic. No sedation. Safe for daily use. Each 0.1mL spray = 200mcg at this concentration. Can be used alongside Semax.',
+    notes: 'Anxiolytic, nootropic. No sedation. Safe for daily use. Can be used alongside Semax.',
     color: '#0ea5e9',
+    vialOptions: [
+      { label: '5mg vial',             vialMg: 5,  bacMl: 2.5, note: 'Standard — 5/5 split' },
+      { label: '10mg vial · standard', vialMg: 10, bacMl: 5,   note: '10mg + 5mL → same 200mcg/spray, 2× more doses' },
+      { label: '10mg vial · high-dose', vialMg: 10, bacMl: 2.5, note: '10mg + 2.5mL → 400mcg/spray for higher dose protocols' },
+    ],
   },
 ]
 
@@ -258,8 +264,9 @@ export default function DosingTab({ recommendation }) {
         <h3 style={nasalTitleStyle}>Intranasal Dosing — Semax &amp; Selank</h3>
         <p style={nasalSubStyle}>
           Intranasal peptides don't use a syringe draw volume — they're administered via nasal spray bottle.
-          Standard setup: <strong>5mg vial + 2.5mL BAC water = 2mg/mL (2,000mcg/mL)</strong>.
-          A standard nasal pump delivers <strong>0.1mL per spray = 200mcg</strong>.
+          Use the vial size buttons on each card to match what you bought. A standard nasal pump delivers{' '}
+          <strong>0.1mL per spray</strong>. The most common setup (5mg + 2.5mL or 10mg + 5mL) gives{' '}
+          <strong>200mcg per spray</strong>.
         </p>
         <div style={nasalGridStyle}>
           {NASAL_PRESETS.map(p => <NasalCard key={p.name} preset={p} />)}
@@ -404,9 +411,13 @@ const conversionGridStyle = {
 // ── Intranasal components + styles ───────────────────────────────────────────
 
 function NasalCard({ preset: p }) {
-  const concMcgMl = (p.vialMg * 1000) / p.bacMl          // mcg/mL
-  const sprayMcg  = (concMcgMl * p.sprayUl) / 1000       // mcg per spray
+  const [optIdx, setOptIdx] = useState(0)
+  const opt = p.vialOptions[optIdx]
+
+  const concMcgMl     = (opt.vialMg * 1000) / opt.bacMl
+  const sprayMcg      = (concMcgMl * p.sprayUl) / 1000
   const spraysForDose = Math.round(p.typicalDoseMcg / sprayMcg)
+  const totalSprays   = Math.floor((opt.vialMg * 1000) / sprayMcg)
 
   return (
     <div style={nasalCardStyle(p.color)}>
@@ -414,18 +425,32 @@ function NasalCard({ preset: p }) {
         <span style={nasalCardNameStyle}>{p.name}</span>
         <span style={nasalCardFreqStyle}>{p.frequency}</span>
       </div>
+
+      {/* Vial size toggle */}
+      <div style={nasalToggleRowStyle}>
+        {p.vialOptions.map((o, i) => (
+          <button key={i} onClick={() => setOptIdx(i)} style={nasalToggleBtnStyle(i === optIdx, p.color)}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+      <div style={nasalOptNoteStyle}>{opt.note}</div>
+
       <div style={nasalCardBodyStyle}>
         <div style={nasalStatRowStyle}>
-          <NasalStat label="Reconstitution" value={`${p.vialMg}mg + ${p.bacMl}mL BAC water`} color={p.color} />
-          <NasalStat label="Concentration" value={`${concMcgMl.toFixed(0)} mcg/mL`} color={p.color} />
+          <NasalStat label="Reconstitution" value={`${opt.vialMg}mg + ${opt.bacMl}mL BAC water`} color={p.color} />
+          <NasalStat label="Concentration"  value={`${concMcgMl.toFixed(0)} mcg/mL`} color={p.color} />
           <NasalStat label="Per spray (0.1mL)" value={`${sprayMcg.toFixed(0)} mcg`} color={p.color} />
-          <NasalStat label="Typical dose" value={`${p.typicalDoseMcg} mcg (${spraysForDose} spray${spraysForDose !== 1 ? 's' : ''})`} color={p.color} />
+          <NasalStat label="Typical dose"   value={`${p.typicalDoseMcg} mcg (${spraysForDose} spray${spraysForDose !== 1 ? 's' : ''})`} color={p.color} />
         </div>
         <div style={nasalTimingStyle}>
           <span style={{ color: '#94a3b8', fontSize: '10px', letterSpacing: '0.06em' }}>TIMING · </span>
           {p.timing}
         </div>
-        <div style={nasalNotesStyle}>{p.notes}</div>
+        <div style={nasalNotesStyle}>
+          {p.notes}{' '}
+          <strong style={{ color: p.color }}>{totalSprays} total sprays</strong> per vial at this setup.
+        </div>
       </div>
     </div>
   )
@@ -498,6 +523,34 @@ const nasalCardFreqStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '11px',
   color: '#64748b',
+}
+
+const nasalToggleRowStyle = {
+  display: 'flex',
+  gap: '6px',
+  padding: '10px 16px 4px',
+  flexWrap: 'wrap',
+}
+
+const nasalToggleBtnStyle = (active, color) => ({
+  background: active ? color : '#f1f5f9',
+  border: `1px solid ${active ? color : '#e2e8f0'}`,
+  borderRadius: '6px',
+  color: active ? '#fff' : '#64748b',
+  cursor: 'pointer',
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '10px',
+  fontWeight: active ? 600 : 400,
+  padding: '4px 10px',
+  transition: 'all 0.15s',
+})
+
+const nasalOptNoteStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '10px',
+  color: '#94a3b8',
+  padding: '0 16px 8px',
+  borderBottom: '1px solid #f1f5f9',
 }
 
 const nasalCardBodyStyle = {
