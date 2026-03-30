@@ -1,160 +1,220 @@
 import { useState } from 'react'
 
+const AFF = '?utm_source=affiliate_marketing&code=NICK1898'
+const BASE = 'https://www.aminoclub.com/us/products'
+const url = (slug) => `${BASE}/${slug}${AFF}`
+
 const PRODUCTS = [
-  // Recovery & Repair
-  {
-    name: 'BPC-157',
-    category: 'Recovery',
-    desc: 'Synthetic pentadecapeptide derived from human gastric juice. Gold standard for tendon, ligament, and gut repair. Promotes angiogenesis and accelerates wound healing.',
-    research: 'moderate',
-    routes: ['SubQ', 'IM', 'Oral'],
-    commonDose: '250–500 mcg/day',
-    slug: 'bpc-157',
-  },
-  {
-    name: 'TB-500',
-    category: 'Recovery',
-    desc: 'Thymosin Beta-4 fragment (aa 17–23). Promotes actin polymerization, angiogenesis, and systemic tissue repair. Widely used for injury loading protocols.',
-    research: 'limited',
-    routes: ['SubQ', 'IM'],
-    commonDose: '2–5 mg/week (loading)',
-    slug: 'tb-500',
-  },
-  {
-    name: 'GHK-Cu',
-    category: 'Recovery',
-    desc: 'Copper-binding tripeptide. Upregulates collagen synthesis, BDNF, and wound healing genes. Anti-inflammatory and neuroprotective properties.',
-    research: 'limited',
-    routes: ['SubQ'],
-    commonDose: '1–2 mg/day',
-    slug: 'ghk-cu',
-  },
-  // GH Secretagogues
-  {
-    name: 'CJC-1295 (No DAC)',
-    category: 'GH / Anti-aging',
-    desc: 'Modified GHRH analog without drug affinity complex. Amplifies natural pulsatile GH release without blunting the feedback axis. Always stack with a GHRP.',
-    research: 'limited',
-    routes: ['SubQ'],
-    commonDose: '100–300 mcg pre-sleep',
-    slug: 'cjc-1295-no-dac',
-  },
-  {
-    name: 'Ipamorelin',
-    category: 'GH / Anti-aging',
-    desc: 'Selective ghrelin mimetic. Cleanest GH pulse with minimal cortisol, prolactin, or appetite stimulation. The benchmark GHRP for stacking with CJC-1295.',
-    research: 'moderate',
-    routes: ['SubQ'],
-    commonDose: '100–300 mcg pre-sleep',
-    slug: 'ipamorelin',
-  },
-  {
-    name: 'Tesamorelin',
-    category: 'GH / Anti-aging',
-    desc: 'FDA-approved GHRH analog. Clinically proven visceral fat reduction and GH secretion. More potent than CJC-1295 for metabolic effects.',
-    research: 'robust',
-    routes: ['SubQ'],
-    commonDose: '1–2 mg/day',
-    slug: 'tesamorelin',
-  },
-  {
-    name: 'Epithalon',
-    category: 'GH / Anti-aging',
-    desc: 'Tetrapeptide that activates telomerase, extending telomere length. Regulates melatonin and circadian rhythm. Anti-aging flagship compound.',
-    research: 'limited',
-    routes: ['SubQ'],
-    commonDose: '5–10 mg/day, 10–20 day cycle',
-    slug: 'epithalon',
-  },
   // Fat Loss
+  {
+    name: 'Retatrutide (GLP-3)',
+    category: 'Fat Loss',
+    desc: 'Triple agonist (GLP-1/GIP/glucagon). Most powerful fat loss peptide in clinical trials — outperforms semaglutide and tirzepatide. Preserves lean muscle better than other GLP-1s. Phase 2 trials show 24%+ body weight reduction.',
+    research: 'moderate',
+    routes: ['SubQ'],
+    commonDose: '0.5–12 mg/week (titrated)',
+    link: url('glp-3'),
+  },
+  {
+    name: 'Cagrilinitide',
+    category: 'Fat Loss',
+    desc: 'Long-acting amylin analog. Synergizes powerfully with GLP-1 agonists for fat loss. Reduces appetite centrally, improves glucose control, and promotes satiety independently of GLP-1 pathway.',
+    research: 'moderate',
+    routes: ['SubQ'],
+    commonDose: '0.3–2.4 mg/week',
+    link: url('cagrilintide'),
+  },
   {
     name: 'AOD-9604',
     category: 'Fat Loss',
-    desc: 'GH fragment 176–191. Promotes lipolysis via fat cell beta-3 receptors without elevating IGF-1 or affecting blood sugar. Best taken fasted.',
+    desc: 'GH fragment 176–191. Promotes lipolysis via fat cell beta-3 receptors without elevating IGF-1 or affecting blood sugar. Best taken fasted in the morning.',
     research: 'limited',
     routes: ['SubQ'],
     commonDose: '300 mcg/day, fasted AM',
-    slug: 'aod-9604',
+    link: url('aod-9604'),
   },
   {
     name: '5-Amino-1MQ',
     category: 'Fat Loss',
-    desc: 'NNMT (nicotinamide N-methyltransferase) inhibitor. Elevates NAD+, activates SIRT1, and induces adipocyte browning. Oral bioavailability.',
+    desc: 'NNMT inhibitor. Elevates NAD+, activates SIRT1, and induces adipocyte browning. Oral bioavailability makes it easy to stack. Strong synergy with GLP-1 agonists.',
     research: 'limited',
     routes: ['Oral'],
     commonDose: '50–100 mg/day',
-    slug: '5-amino-1mq',
+    link: url('5-amino-1mq'),
+  },
+  // Muscle Building
+  {
+    name: 'CJC-1295 No DAC + Ipamorelin',
+    category: 'Muscle Building',
+    desc: 'The gold standard GH secretagogue stack. CJC-1295 (GHRH analog) amplifies GH pulse amplitude; Ipamorelin (selective GHRP) triggers the pulse cleanly without cortisol or prolactin bleed. Take together pre-sleep.',
+    research: 'moderate',
+    routes: ['SubQ'],
+    commonDose: '100–300 mcg each, pre-sleep',
+    link: url('cjc-ipa-no-dac'),
+  },
+  {
+    name: 'Ipamorelin',
+    category: 'Muscle Building',
+    desc: 'Selective ghrelin mimetic. Cleanest GH pulse available — minimal cortisol, prolactin, or appetite stimulation. Benchmark GHRP for stacking with CJC-1295. Ideal for muscle building and recovery.',
+    research: 'moderate',
+    routes: ['SubQ'],
+    commonDose: '100–300 mcg pre-sleep',
+    link: url('ipamorelin'),
+  },
+  {
+    name: 'IGF-1 LR3',
+    category: 'Muscle Building',
+    desc: 'Long R3 analog of IGF-1. Directly stimulates muscle hyperplasia and hypertrophy via IGF-1 receptor. Longer half-life than native IGF-1. Powerful for recomp when used post-workout.',
+    research: 'limited',
+    routes: ['SubQ', 'IM'],
+    commonDose: '20–60 mcg/day post-workout',
+    link: url('igf-1-lr3'),
+  },
+  {
+    name: 'BPC-157',
+    category: 'Muscle Building',
+    desc: 'Synthetic pentadecapeptide. Gold standard for tendon, ligament, and muscle repair. Promotes angiogenesis, accelerates healing, and protects the gut. Essential in any heavy training stack.',
+    research: 'moderate',
+    routes: ['SubQ', 'IM', 'Oral'],
+    commonDose: '250–500 mcg/day',
+    link: url('bpc-157T'),
+  },
+  {
+    name: 'Tesamorelin',
+    category: 'Muscle Building',
+    desc: 'FDA-approved GHRH analog. Clinically proven visceral fat reduction and GH secretion. More potent than CJC-1295 for metabolic and recomp effects. Strong choice for body recomposition.',
+    research: 'robust',
+    routes: ['SubQ'],
+    commonDose: '1–2 mg/day',
+    link: url('tesamorlin'),
   },
   {
     name: 'MOTS-C',
-    category: 'Fat Loss',
-    desc: 'Mitochondrial-derived peptide from the 12S rRNA gene. Enhances insulin sensitivity, fatty acid oxidation, and exercise capacity. Called an "exercise mimetic."',
+    category: 'Muscle Building',
+    desc: 'Mitochondrial-derived peptide. Enhances insulin sensitivity, fatty acid oxidation, and exercise capacity. Called an "exercise mimetic" — improves training response and metabolic efficiency.',
     research: 'limited',
     routes: ['SubQ', 'IM'],
     commonDose: '5–10 mg/week',
-    slug: 'mots-c',
+    link: url('mots-c'),
+  },
+  // Recovery & Repair
+  {
+    name: 'GHK-Cu',
+    category: 'Recovery',
+    desc: 'Copper-binding tripeptide. Upregulates collagen synthesis, BDNF, and wound healing genes. Anti-inflammatory and neuroprotective. Excellent for joint health and skin in any stack.',
+    research: 'limited',
+    routes: ['SubQ'],
+    commonDose: '1–2 mg/day',
+    link: url('ghk-cu'),
+  },
+  {
+    name: 'KPV',
+    category: 'Recovery',
+    desc: 'C-terminal fragment of α-MSH. Potent anti-inflammatory in the gut via NF-κB inhibition. Used for IBD, colitis, and intestinal permeability. Pairs well with BPC-157 for gut protocols.',
+    research: 'limited',
+    routes: ['SubQ', 'Oral'],
+    commonDose: '250–500 mcg/day',
+    link: url('kpv'),
   },
   // Cognitive
   {
     name: 'Semax',
     category: 'Cognitive',
-    desc: 'ACTH 4–7 analog developed in Russia. Potently upregulates BDNF and NGF, enhancing focus, memory, and neuroprotection. Intranasal delivery.',
+    desc: 'ACTH 4–7 analog developed in Russia. Potently upregulates BDNF and NGF. Enhances focus, memory, and neuroprotection. Fast-acting via intranasal delivery.',
     research: 'moderate',
     routes: ['Nasal'],
     commonDose: '200–600 mcg/nostril',
-    slug: 'semax',
+    link: url('semax'),
   },
   {
     name: 'Selank',
     category: 'Cognitive',
-    desc: 'Synthetic heptapeptide analog of tuftsin. Anxiolytic without sedation, nootropic via IL-6 modulation. Often stacked with Semax for cognitive + mood.',
+    desc: 'Synthetic heptapeptide analog of tuftsin. Anxiolytic without sedation, nootropic via IL-6 modulation. Often stacked with Semax for cognitive enhancement + mood stabilization.',
     research: 'moderate',
     routes: ['Nasal'],
     commonDose: '250–1000 mcg/nostril',
-    slug: 'selank',
+    link: url('selank'),
+  },
+  // Sleep
+  {
+    name: 'DSIP',
+    category: 'Sleep',
+    desc: 'Delta Sleep Inducing Peptide. Promotes slow-wave (deep) sleep, reduces cortisol, and modulates circadian rhythm. Taken pre-sleep for improved recovery and GH pulse quality.',
+    research: 'limited',
+    routes: ['SubQ'],
+    commonDose: '100–300 mcg pre-sleep',
+    link: url('dsip'),
   },
   // Sexual Health
   {
     name: 'PT-141 (Bremelanotide)',
     category: 'Sexual Health',
-    desc: 'FDA-approved melanocortin agonist. Acts centrally on the hypothalamus to drive libido and sexual arousal in both men and women. PRN dosing.',
+    desc: 'FDA-approved melanocortin agonist. Acts centrally on the hypothalamus to drive libido and sexual arousal in both men and women. PRN dosing — not daily.',
     research: 'robust',
     routes: ['SubQ'],
     commonDose: '0.5–2 mg as needed',
-    slug: 'pt-141',
+    link: url('pt-141'),
   },
+  // Anti-Aging
   {
-    name: 'Kisspeptin-10',
-    category: 'Sexual Health',
-    desc: 'Endogenous neuropeptide that drives GnRH → LH → testosterone axis. Supports natural testosterone production and libido.',
+    name: 'Epithalon',
+    category: 'Anti-Aging',
+    desc: 'Tetrapeptide that activates telomerase, extending telomere length. Regulates melatonin and circadian rhythm. Anti-aging flagship compound. Run as 10–20 day cycles.',
     research: 'limited',
     routes: ['SubQ'],
-    commonDose: '0.1–1 nmol/kg',
-    slug: 'kisspeptin-10',
+    commonDose: '5–10 mg/day, 10–20 day cycle',
+    link: url('epithalon'),
+  },
+  {
+    name: 'SNAP-8',
+    category: 'Anti-Aging',
+    desc: 'Octapeptide that reduces expression of neurotransmitters that cause muscle contraction. Topical anti-wrinkle peptide that mimics the effect of botulinum toxin. Used in cosmetic protocols.',
+    research: 'limited',
+    routes: ['Topical'],
+    commonDose: 'Topical per formulation',
+    link: url('snap-8'),
   },
   // Immune
   {
     name: 'Thymosin Alpha-1',
     category: 'Immune',
-    desc: 'FDA-approved in 35+ countries. Thymic peptide that enhances T-cell function, antiviral immunity, and dendritic cell maturation. Approved for hepatitis and cancer adjunct.',
+    desc: 'Approved in 35+ countries. Thymic peptide that enhances T-cell function, antiviral immunity, and dendritic cell maturation. Approved for hepatitis and cancer adjunct therapy.',
     research: 'robust',
     routes: ['SubQ'],
     commonDose: '0.5–1.6 mg, 2–3x/week',
-    slug: 'thymosin-alpha-1',
+    link: url('thymosin-alpha-1'),
   },
-  // Gut Health
+  // Wellness / Essentials
   {
-    name: 'KPV',
-    category: 'Gut Health',
-    desc: 'C-terminal fragment of α-MSH. Potent anti-inflammatory in the gut via NF-κB inhibition. Used for IBD, colitis, and intestinal permeability.',
-    research: 'limited',
-    routes: ['SubQ', 'Oral'],
-    commonDose: '250–500 mcg/day',
-    slug: 'kpv',
+    name: 'NAD+',
+    category: 'Wellness',
+    desc: 'Essential coenzyme in cellular energy metabolism. IV or SubQ supplementation raises NAD+ levels rapidly, supporting mitochondrial function, DNA repair, and sirtuin activation.',
+    research: 'moderate',
+    routes: ['SubQ', 'IV'],
+    commonDose: '100–500 mg/week',
+    link: url('nad-plus'),
+  },
+  {
+    name: 'Glutathione',
+    category: 'Wellness',
+    desc: 'Master antioxidant. Reduces oxidative stress, supports liver detox, and enhances immune function. Injectable glutathione has dramatically higher bioavailability than oral.',
+    research: 'moderate',
+    routes: ['SubQ', 'IV'],
+    commonDose: '200–600 mg, 2–3x/week',
+    link: url('glutathione'),
+  },
+  {
+    name: 'Bacteriostatic Water',
+    category: 'Essentials',
+    desc: '0.9% benzyl alcohol sterile water. Required for reconstituting all lyophilized peptides. Bacteriostatic agent extends vial life after opening. Always use BAC water — not saline, not sterile water.',
+    research: 'robust',
+    routes: ['Reconstitution'],
+    commonDose: '1–3 mL per vial',
+    link: url('bac-water'),
   },
 ]
 
-const CATEGORIES = ['All', 'Recovery', 'GH / Anti-aging', 'Fat Loss', 'Cognitive', 'Sexual Health', 'Immune', 'Gut Health']
+const CATEGORIES = ['All', 'Fat Loss', 'Muscle Building', 'Recovery', 'Cognitive', 'Sleep', 'Sexual Health', 'Anti-Aging', 'Immune', 'Wellness', 'Essentials']
 
 const RESEARCH_COLORS = {
   robust:    { bg: '#14532d', color: '#4ade80' },
@@ -176,9 +236,10 @@ export default function ProductsTab() {
         <div>
           <h2 style={heroTitleStyle}>AminoClub.com</h2>
           <p style={heroSubStyle}>Research-grade peptides · Third-party tested · Ships from USA</p>
+          <p style={heroCodeStyle}>Use code <strong style={{ color: '#a78bfa' }}>NICK1898</strong> at checkout</p>
         </div>
         <a
-          href="https://aminoclub.com?utm_source=affiliate_marketing&code=NICK1898"
+          href={`https://www.aminoclub.com${AFF}`}
           target="_blank"
           rel="noopener noreferrer"
           style={heroLinkStyle}
@@ -208,7 +269,7 @@ export default function ProductsTab() {
       </div>
 
       <p style={disclaimerStyle}>
-        Product links search AminoClub.com for each peptide. Always verify product availability and certificate of analysis before purchasing. These statements have not been evaluated by the FDA. Research peptides are for laboratory research purposes only.
+        For research purposes only. These statements have not been evaluated by the FDA. Always verify certificate of analysis before use.
       </p>
     </div>
   )
@@ -217,7 +278,6 @@ export default function ProductsTab() {
 function ProductCard({ product }) {
   const level = RESEARCH_COLORS[product.research] || RESEARCH_COLORS.anecdotal
   const label = RESEARCH_LABELS[product.research] || 'ANECDOTAL'
-  const searchUrl = `https://aminoclub.com/search?type=product&q=${encodeURIComponent(product.name)}&utm_source=affiliate_marketing&code=NICK1898`
 
   return (
     <div style={cardStyle}>
@@ -243,12 +303,12 @@ function ProductCard({ product }) {
       </div>
 
       <a
-        href={searchUrl}
+        href={product.link}
         target="_blank"
         rel="noopener noreferrer"
         style={shopButtonStyle}
       >
-        Shop {product.name} on AminoClub.com ↗
+        Shop on AminoClub.com ↗
       </a>
     </div>
   )
@@ -279,6 +339,13 @@ const heroSubStyle = {
   fontFamily: "'IBM Plex Mono', monospace",
   fontSize: '12px',
   color: '#64748b',
+  marginBottom: '4px',
+}
+
+const heroCodeStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '12px',
+  color: '#64748b',
 }
 
 const heroLinkStyle = {
@@ -292,7 +359,6 @@ const heroLinkStyle = {
   padding: '10px 18px',
   textDecoration: 'none',
   whiteSpace: 'nowrap',
-  transition: 'background 0.2s',
 }
 
 const filterRowStyle = {
@@ -330,7 +396,6 @@ const cardStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: '12px',
-  transition: 'border-color 0.2s',
 }
 
 const cardTopStyle = {
@@ -341,7 +406,7 @@ const cardTopStyle = {
 
 const cardNameStyle = {
   fontFamily: "'Space Grotesk', sans-serif",
-  fontSize: '15px',
+  fontSize: '14px',
   fontWeight: 700,
   color: '#f1f5f9',
 }
