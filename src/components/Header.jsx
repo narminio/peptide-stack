@@ -9,7 +9,7 @@ export default function Header() {
         <p style={subtitleStyle}>Research-grade protocol builder · Powered by Claude AI</p>
       </div>
       <a
-        href="https://aminoclub.com?ref=NICK1898"
+        href="https://aminoclub.com?utm_source=affiliate_marketing&code=NICK1898"
         target="_blank"
         rel="noopener noreferrer"
         style={shopLinkStyle}
