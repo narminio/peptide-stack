@@ -153,6 +153,33 @@ Return JSON matching this exact schema:
   }
 })
 
+// ── POST /api/refine — refine an existing recommendation via follow-up message
+app.post('/api/refine', async (req, res) => {
+  try {
+    const { recommendation, message, history = [] } = req.body
+    if (!recommendation || !message) {
+      return res.status(400).json({ error: 'recommendation and message are required' })
+    }
+
+    const systemPrompt = `You are an expert peptide research specialist. The user has an existing stack recommendation and wants to refine it based on their follow-up request. Return an updated recommendation in the exact same JSON schema — do not change the schema structure. Make targeted changes based on the user's request while keeping appropriate peptides from the original stack. Return ONLY raw JSON (no markdown, no backticks). Start with { end with }.`
+
+    const contextMsg = `Current recommendation:\n${JSON.stringify(recommendation, null, 2)}\n\nUser refinement request: ${message}\n\nReturn the full updated recommendation JSON matching the original schema exactly.`
+
+    const messages = [
+      ...history.map(h => ({ role: h.role, content: h.content })),
+      { role: 'user', content: contextMsg },
+    ]
+
+    const text = await callAnthropic(systemPrompt, messages, 5000)
+    let parsed
+    try { parsed = JSON.parse(text) }
+    catch { return res.status(500).json({ error: 'Failed to parse model response as JSON', raw: text }) }
+    res.json(parsed)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 // ── GET /api/stack — return current stack config
 app.get('/api/stack', (req, res) => {
   try {

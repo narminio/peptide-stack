@@ -34,6 +34,39 @@ export default function RecommenderTab({ onRecommendation, recommendation, onVie
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [showProfile, setShowProfile] = useState(false)
+  const [chatHistory, setChatHistory] = useState([])
+  const [chatInput, setChatInput] = useState('')
+  const [chatLoading, setChatLoading] = useState(false)
+  const [chatError, setChatError] = useState(null)
+
+  async function handleRefine() {
+    const msg = chatInput.trim()
+    if (!msg || !recommendation) return
+    setChatLoading(true)
+    setChatError(null)
+    const userEntry = { role: 'user', content: msg }
+    setChatHistory(h => [...h, userEntry])
+    setChatInput('')
+    try {
+      const res = await fetch('/api/refine', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recommendation, message: msg, history: chatHistory }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || `Server error: ${res.status}`)
+      }
+      const data = await res.json()
+      onRecommendation(data)
+      setChatHistory(h => [...h, { role: 'assistant', content: 'Stack updated based on your request.' }])
+    } catch (err) {
+      setChatError(err.message)
+      setChatHistory(h => h.slice(0, -1)) // remove the user message on error
+    } finally {
+      setChatLoading(false)
+    }
+  }
 
   function toggleGoal(id) {
     setSelectedGoals(prev =>
@@ -215,6 +248,44 @@ export default function RecommenderTab({ onRecommendation, recommendation, onVie
               <p style={bodyTextStyle}>{recommendation.cycleProtocol}</p>
             </InfoBox>
           )}
+
+          {/* Refinement chat */}
+          <div style={chatWrapStyle}>
+            <div style={chatHeaderStyle}>
+              <span style={chatTitleStyle}>Refine Your Stack</span>
+              <span style={chatSubStyle}>Ask to swap peptides, adjust for conditions, change budget, or anything else</span>
+            </div>
+
+            {chatHistory.length > 0 && (
+              <div style={chatHistoryStyle}>
+                {chatHistory.map((entry, i) => (
+                  <div key={i} style={chatBubbleWrapStyle(entry.role)}>
+                    <div style={chatBubbleStyle(entry.role)}>{entry.content}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div style={chatInputRowStyle}>
+              <textarea
+                placeholder='e.g. "swap TB-500 for something cheaper" · "I have a torn rotator cuff, adjust" · "remove injectables, oral only"'
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleRefine() } }}
+                style={chatTextareaStyle}
+                rows={2}
+                disabled={chatLoading}
+              />
+              <button
+                onClick={handleRefine}
+                disabled={chatLoading || !chatInput.trim()}
+                style={chatSendStyle(chatLoading || !chatInput.trim())}
+              >
+                {chatLoading ? <span style={spinnerStyle} /> : 'Update →'}
+              </button>
+            </div>
+            {chatError && <p style={{ color: '#f87171', fontSize: '12px', marginTop: '8px' }}>{chatError}</p>}
+          </div>
         </div>
       )}
     </div>
@@ -567,3 +638,101 @@ const bodyTextStyle = {
   color: '#64748b',
   lineHeight: 1.7,
 }
+
+// ── Chat refinement styles ───────────────────────────────────────────────────
+
+const chatWrapStyle = {
+  marginTop: '24px',
+  background: '#ffffff',
+  border: '1px solid #e2e8f0',
+  borderRadius: '12px',
+  overflow: 'hidden',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+}
+
+const chatHeaderStyle = {
+  padding: '16px 20px 12px',
+  borderBottom: '1px solid #f1f5f9',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+}
+
+const chatTitleStyle = {
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: '13px',
+  fontWeight: 700,
+  color: '#0f172a',
+  letterSpacing: '0.04em',
+}
+
+const chatSubStyle = {
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '11px',
+  color: '#94a3b8',
+}
+
+const chatHistoryStyle = {
+  padding: '12px 20px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  borderBottom: '1px solid #f1f5f9',
+  maxHeight: '240px',
+  overflowY: 'auto',
+}
+
+const chatBubbleWrapStyle = (role) => ({
+  display: 'flex',
+  justifyContent: role === 'user' ? 'flex-end' : 'flex-start',
+})
+
+const chatBubbleStyle = (role) => ({
+  background: role === 'user' ? '#7c3aed' : '#f1f5f9',
+  color: role === 'user' ? '#fff' : '#475569',
+  borderRadius: role === 'user' ? '10px 10px 2px 10px' : '10px 10px 10px 2px',
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '12px',
+  lineHeight: 1.6,
+  maxWidth: '80%',
+  padding: '8px 12px',
+})
+
+const chatInputRowStyle = {
+  padding: '12px 16px',
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'flex-end',
+}
+
+const chatTextareaStyle = {
+  background: '#f8fafc',
+  border: '1px solid #e2e8f0',
+  borderRadius: '8px',
+  color: '#0f172a',
+  fontFamily: "'IBM Plex Mono', monospace",
+  fontSize: '12px',
+  flex: 1,
+  outline: 'none',
+  padding: '10px 12px',
+  resize: 'none',
+  lineHeight: 1.5,
+}
+
+const chatSendStyle = (disabled) => ({
+  background: disabled ? '#e2e8f0' : '#7c3aed',
+  border: 'none',
+  borderRadius: '8px',
+  color: disabled ? '#94a3b8' : '#fff',
+  cursor: disabled ? 'not-allowed' : 'pointer',
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: '13px',
+  fontWeight: 600,
+  padding: '10px 18px',
+  whiteSpace: 'nowrap',
+  flexShrink: 0,
+  display: 'flex',
+  alignItems: 'center',
+  minWidth: '80px',
+  justifyContent: 'center',
+})

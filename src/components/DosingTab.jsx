@@ -49,7 +49,7 @@ const PRESETS = [
   { name: 'Epithalon',        vialMg: '10',  doseMg: '10',   freq: 'Daily × 10–20 days/cycle' },
   { name: 'Thymosin Alpha-1', vialMg: '1.5', doseMg: '1.5',  freq: '2–3×/week' },
   { name: 'Retatrutide',      vialMg: '10',  doseMg: '0.5',  freq: 'Weekly (titrate +0.5mg/wk)' },
-  { name: 'Kisspeptin-10',    vialMg: '5',   doseMg: '1',    freq: '2–3×/week' },
+  { name: 'Kisspeptin-10',    vialMg: '5',   doseMg: '0.1',  freq: '2–3×/week (weight-based: ~0.1mg/80kg)' },
   { name: 'KPV',              vialMg: '5',   doseMg: '0.5',  freq: 'Daily' },
   { name: 'DSIP',             vialMg: '5',   doseMg: '0.2',  freq: 'Pre-sleep as needed' },
   { name: 'Selank',           vialMg: '5',   doseMg: 'nasal', freq: null },
