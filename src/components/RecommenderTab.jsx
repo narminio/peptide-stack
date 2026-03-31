@@ -69,7 +69,7 @@ export default function RecommenderTab({ onRecommendation, recommendation, onVie
   }
 
   return (
-    <div style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+    <div id="recommender-form" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
       {/* Goal selector */}
       <Section title="Select Your Goals">
         <div style={goalGridStyle}>

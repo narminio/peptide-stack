@@ -35,11 +35,8 @@ export default function TrustBar() {
           <div>
             <h2 style={titleStyle}>Quality You Can Verify, Not Just Trust</h2>
             <p style={subtitleStyle}>
-              All peptides recommended on PeptideStack are sourced from{' '}
-              <a href={`https://www.aminoclub.com${AFF}`} target="_blank" rel="noopener noreferrer" style={linkStyle}>
-                AminoClub.com
-              </a>
-              {' '}— guaranteed 99%+ pure, always third-party tested, ships from the USA.
+              All peptides recommended on PeptideStack are sourced from AminoClub.com
+              — guaranteed 99%+ pure, always third-party tested, ships from the USA.
             </p>
           </div>
           <a
@@ -79,7 +76,7 @@ export default function TrustBar() {
 const wrapStyle = {
   background: '#0f172a',
   borderRadius: '16px',
-  margin: '0 0 40px',
+  margin: '48px 0 40px',
   overflow: 'hidden',
 }
 
@@ -109,11 +106,6 @@ const subtitleStyle = {
   color: '#64748b',
   lineHeight: 1.6,
   maxWidth: '480px',
-}
-
-const linkStyle = {
-  color: '#a78bfa',
-  textDecoration: 'underline',
 }
 
 const shopButtonStyle = {

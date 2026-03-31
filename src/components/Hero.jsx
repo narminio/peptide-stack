@@ -2,7 +2,7 @@ const AFF = '?utm_source=affiliate_marketing&code=NICK1898'
 
 const STATS = [
   { num: '22',    label: 'Research Peptides' },
-  { num: 'AI',    label: 'Claude Powered' },
+  { num: 'AI',    label: 'AI Powered' },
   { num: '99%+',  label: 'AminoClub Purity' },
   { num: 'COA',   label: 'Every Batch Tested' },
 ]
@@ -23,7 +23,7 @@ export default function Hero({ onBuildStack }) {
       </h1>
 
       <p style={subheadStyle}>
-        Answer a few questions. Get a Claude AI-powered stack recommendation based on real research —
+        Answer a few questions. Get an AI-powered stack recommendation based on real research —
         with exact dosing, timing, reconstitution, and direct links to verified peptides.
       </p>
 
