@@ -35,21 +35,25 @@ const NASAL_PRESETS = [
   },
 ]
 
-// Common peptide presets: [name, typical vial mg, typical dose mg]
+// freq = per-injection frequency note shown below the dose field
 const PRESETS = [
-  { name: 'BPC-157',          vialMg: '5',  doseMg: '0.5'  },
-  { name: 'TB-500',           vialMg: '5',  doseMg: '2.5'  },
-  { name: 'GHK-Cu',           vialMg: '5',  doseMg: '1'    },
-  { name: 'CJC-1295 no DAC',  vialMg: '2',  doseMg: '0.15' },
-  { name: 'Ipamorelin',       vialMg: '2',  doseMg: '0.15' },
-  { name: 'MOTS-C',           vialMg: '5',  doseMg: '5'    },
-  { name: 'Tesamorelin',      vialMg: '2',  doseMg: '1'    },
-  { name: 'AOD-9604',         vialMg: '5',  doseMg: '0.3'  },
-  { name: 'PT-141',           vialMg: '10', doseMg: '1'    },
-  { name: 'Epithalon',        vialMg: '10', doseMg: '10'   },
-  { name: 'Thymosin Alpha-1', vialMg: '1.5',doseMg: '1.5'  },
-  { name: 'Selank',           vialMg: '5',  doseMg: 'nasal' },
-  { name: 'Semax',            vialMg: '5',  doseMg: 'nasal' },
+  { name: 'BPC-157',          vialMg: '5',   doseMg: '0.5',  freq: 'Daily or 2×/day' },
+  { name: 'TB-500',           vialMg: '5',   doseMg: '2',    freq: 'Loading: 2×/week · Maintenance: biweekly' },
+  { name: 'GHK-Cu',           vialMg: '5',   doseMg: '1',    freq: 'Daily' },
+  { name: 'CJC-1295 no DAC',  vialMg: '2',   doseMg: '0.15', freq: 'Daily, pre-sleep' },
+  { name: 'Ipamorelin',       vialMg: '2',   doseMg: '0.15', freq: 'Daily, pre-sleep' },
+  { name: 'MOTS-C',           vialMg: '5',   doseMg: '5',    freq: '1–2×/week' },
+  { name: 'Tesamorelin',      vialMg: '2',   doseMg: '1',    freq: 'Daily' },
+  { name: 'AOD-9604',         vialMg: '5',   doseMg: '0.3',  freq: 'Daily, fasted AM' },
+  { name: 'PT-141',           vialMg: '10',  doseMg: '1',    freq: 'As needed (PRN)' },
+  { name: 'Epithalon',        vialMg: '10',  doseMg: '10',   freq: 'Daily × 10–20 days/cycle' },
+  { name: 'Thymosin Alpha-1', vialMg: '1.5', doseMg: '1.5',  freq: '2–3×/week' },
+  { name: 'Retatrutide',      vialMg: '10',  doseMg: '0.5',  freq: 'Weekly (titrate +0.5mg/wk)' },
+  { name: 'Kisspeptin-10',    vialMg: '5',   doseMg: '1',    freq: '2–3×/week' },
+  { name: 'KPV',              vialMg: '5',   doseMg: '0.5',  freq: 'Daily' },
+  { name: 'DSIP',             vialMg: '5',   doseMg: '0.2',  freq: 'Pre-sleep as needed' },
+  { name: 'Selank',           vialMg: '5',   doseMg: 'nasal', freq: null },
+  { name: 'Semax',            vialMg: '5',   doseMg: 'nasal', freq: null },
 ]
 
 function calcRow(vialMg, bacMl, doseMg) {
@@ -196,13 +200,18 @@ export default function DosingTab({ recommendation }) {
                     />
                   </td>
                   <td style={tdStyle}>
-                    <input
-                      type="number" min="0" step="0.001"
-                      placeholder="0.5"
-                      value={row.doseMg}
-                      onChange={e => updateRow(i, 'doseMg', e.target.value)}
-                      style={{ ...inputStyle, width: '80px' }}
-                    />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <input
+                        type="number" min="0" step="0.001"
+                        placeholder="0.5"
+                        value={row.doseMg}
+                        onChange={e => updateRow(i, 'doseMg', e.target.value)}
+                        style={{ ...inputStyle, width: '80px' }}
+                      />
+                      {presetMatch?.freq && (
+                        <span style={freqNoteStyle}>{presetMatch.freq}</span>
+                      )}
+                    </div>
                   </td>
                   <td style={{ ...tdStyle, ...resultCellStyle }}>
                     {result ? (
@@ -332,6 +341,14 @@ const thStyle = {
 const tdStyle = {
   padding: '8px 8px',
   verticalAlign: 'middle',
+}
+
+const freqNoteStyle = {
+  fontSize: '9px',
+  color: '#94a3b8',
+  fontFamily: "'IBM Plex Mono', monospace",
+  lineHeight: 1.4,
+  maxWidth: '120px',
 }
 
 const inputStyle = {
