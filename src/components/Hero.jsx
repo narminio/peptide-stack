@@ -45,7 +45,7 @@ export default function Hero({ onBuildStack }) {
       {/* Stats row */}
       <div style={statsRowStyle}>
         {STATS.map((s, i) => (
-          <div key={i} style={statItemStyle}>
+          <div key={i} className="stat-item" style={statItemStyle}>
             <span style={statNumStyle}>{s.num}</span>
             <span style={statLabelStyle}>{s.label}</span>
           </div>
@@ -57,7 +57,7 @@ export default function Hero({ onBuildStack }) {
 
 const heroWrapStyle = {
   textAlign: 'center',
-  padding: '64px 20px 56px',
+  padding: '40px 16px 40px',
   maxWidth: '720px',
   margin: '0 auto',
 }
@@ -71,10 +71,12 @@ const partnerBadgeStyle = {
   borderRadius: '999px',
   color: '#6d28d9',
   fontFamily: "'IBM Plex Mono', monospace",
-  fontSize: '12px',
+  fontSize: '11px',
   fontWeight: 500,
-  padding: '6px 16px',
-  marginBottom: '28px',
+  padding: '6px 14px',
+  marginBottom: '24px',
+  textAlign: 'center',
+  lineHeight: 1.5,
 }
 
 const badgeDotStyle = {
@@ -86,12 +88,12 @@ const badgeDotStyle = {
 }
 
 const headlineStyle = {
-  fontSize: 'clamp(32px, 5vw, 52px)',
+  fontSize: 'clamp(26px, 6vw, 52px)',
   fontWeight: 800,
   lineHeight: 1.1,
   letterSpacing: '-0.02em',
   color: '#0f172a',
-  marginBottom: '20px',
+  marginBottom: '16px',
 }
 
 const headlineAccentStyle = {
@@ -99,19 +101,19 @@ const headlineAccentStyle = {
 }
 
 const subheadStyle = {
-  fontSize: '17px',
+  fontSize: 'clamp(14px, 3vw, 17px)',
   color: '#64748b',
   lineHeight: 1.7,
-  marginBottom: '32px',
+  marginBottom: '28px',
   fontWeight: 400,
 }
 
 const ctaRowStyle = {
   display: 'flex',
-  gap: '12px',
+  gap: '10px',
   justifyContent: 'center',
   flexWrap: 'wrap',
-  marginBottom: '48px',
+  marginBottom: '36px',
 }
 
 const primaryCtaStyle = {
@@ -120,13 +122,15 @@ const primaryCtaStyle = {
   borderRadius: '10px',
   color: '#fff',
   cursor: 'pointer',
-  fontSize: '15px',
+  fontSize: 'clamp(13px, 3.5vw, 15px)',
   fontWeight: 700,
   fontFamily: "'Space Grotesk', sans-serif",
-  padding: '14px 32px',
+  padding: '13px 28px',
   letterSpacing: '-0.01em',
   boxShadow: '0 4px 14px rgba(124,58,237,0.35)',
   transition: 'all 0.2s',
+  flex: '1 1 auto',
+  maxWidth: '220px',
 }
 
 const secondaryCtaStyle = {
@@ -135,21 +139,22 @@ const secondaryCtaStyle = {
   borderRadius: '10px',
   color: '#475569',
   cursor: 'pointer',
-  fontSize: '15px',
+  fontSize: 'clamp(13px, 3.5vw, 15px)',
   fontWeight: 600,
   fontFamily: "'Space Grotesk', sans-serif",
-  padding: '14px 28px',
+  padding: '13px 24px',
   transition: 'all 0.2s',
   display: 'inline-block',
+  flex: '1 1 auto',
+  maxWidth: '220px',
 }
 
 const statsRowStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  gap: '0',
-  flexWrap: 'wrap',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
   borderTop: '1px solid #e2e8f0',
-  paddingTop: '32px',
+  paddingTop: '24px',
+  gap: '0',
 }
 
 const statItemStyle = {
@@ -157,20 +162,22 @@ const statItemStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   gap: '4px',
-  padding: '0 32px',
+  padding: '8px 12px',
   borderRight: '1px solid #e2e8f0',
 }
 
 const statNumStyle = {
-  fontSize: '22px',
+  fontSize: 'clamp(16px, 4vw, 22px)',
   fontWeight: 800,
   color: '#0f172a',
   letterSpacing: '-0.02em',
 }
 
 const statLabelStyle = {
-  fontSize: '12px',
+  fontSize: '11px',
   color: '#94a3b8',
   fontFamily: "'IBM Plex Mono', monospace",
   letterSpacing: '0.04em',
+  textAlign: 'center',
+  lineHeight: 1.3,
 }

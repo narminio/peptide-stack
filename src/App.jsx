@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useIsMobile } from './hooks/useIsMobile'
 import Header from './components/Header.jsx'
+import BottomNav from './components/BottomNav.jsx'
 import Hero from './components/Hero.jsx'
 import TrustBar from './components/TrustBar.jsx'
 import RecommenderTab from './components/RecommenderTab.jsx'
@@ -11,6 +13,7 @@ import ProductsTab from './components/ProductsTab.jsx'
 export default function App() {
   const [activeTab, setActiveTab] = useState('recommender')
   const [recommendation, setRecommendation] = useState(null)
+  const isMobile = useIsMobile()
 
   function handleRecommendation(data) {
     setRecommendation(data)
@@ -52,6 +55,12 @@ export default function App() {
     }
   }
 
+  const mainStyle = {
+    maxWidth: '1100px',
+    margin: '0 auto',
+    padding: isMobile ? '20px 16px 100px' : '40px 24px 80px',
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
@@ -68,14 +77,10 @@ export default function App() {
           Not medical advice. Always consult a licensed physician before beginning any peptide protocol.
         </p>
       </footer>
+
+      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   )
-}
-
-const mainStyle = {
-  maxWidth: '1100px',
-  margin: '0 auto',
-  padding: '40px 24px 80px',
 }
 
 const footerStyle = {

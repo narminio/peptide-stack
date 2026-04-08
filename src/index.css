@@ -54,3 +54,49 @@ input:focus, textarea:focus, select:focus {
 
 /* Link reset */
 a { text-decoration: none; color: inherit; }
+
+/* ── Mobile responsive ───────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  /* Stat items: 2x2 grid on mobile, remove right borders */
+  .stat-item:nth-child(2n) {
+    border-right: none !important;
+  }
+  .stat-item:nth-child(n+3) {
+    border-top: 1px solid #e2e8f0;
+  }
+
+  /* Full-width submit buttons on mobile */
+  .submit-full-mobile {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Tighter card headers on mobile */
+  .card-header-mobile {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: '8px' !important;
+  }
+
+  /* Reduce section title spacing */
+  .section-tight {
+    margin-bottom: 12px !important;
+  }
+
+  /* Ensure textareas are fully readable on iOS (prevent zoom on focus) */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Prevent iOS auto-zoom on input focus (requires font-size >= 16px) */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
